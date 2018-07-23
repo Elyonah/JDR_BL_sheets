@@ -1,0 +1,9 @@
+{
+	"types": [
+		"weapon",
+		"mod_class",
+		"mod_grenade",
+		"shield",
+		"artefact"
+	]
+}
