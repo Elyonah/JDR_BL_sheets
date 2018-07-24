@@ -8,6 +8,8 @@ Gestion des fiches de personnage du JDR Borderlands
 
 Stocker dans le localStorage le fichier json / créer un nouveau json via \_blank et y insérer nom / sexe / classe en cas de création
 
+*avantages* : c'est quasiment instantanée, pas besoin de php.
+
 *inconvéniants* : la retranscription de tous les champs à faire en jquery... ça va deux minutes.
 
 **Solution 2**
