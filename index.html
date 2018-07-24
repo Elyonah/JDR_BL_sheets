@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Borderlands JDR UI</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/module.css">
   <script
   	src="https://code.jquery.com/jquery-3.3.1.min.js"
   	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -19,7 +19,7 @@
 
 <div class="content">
 	<h2> Nouveau personnage </h2>
-	<form method="GET" action="character.html" id="new_character">
+	<form method="GET" action="character.php" id="new_character">
 		<label for="player_name">Nom du joueur : </label>
 		<input type="text" id="player_name" name="player_name"/>
 		<label for="character_name">Nom du personnage : </label>
@@ -37,7 +37,7 @@
 	</form>
 
 	<h2> Importer mon personnage </h2>
-	<form action="character.html">
+	<form action="character.php">
 		<input id="file" type="file" />
 		<button type="submit">Importer mon personnage !</button>
 	</form>
