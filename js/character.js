@@ -8,25 +8,23 @@ $(document).ready(function(){
 	$("h1.character_name").append(character['character_name'])
 	$("span.player_name").append(character['player_name'])
 
-	var level = $(document.getElementById('level'));
-	var xp = $(document.getElementById('xp'));
-	var money = $(document.getElementById('money'));
+	var level = document.getElementById('level');
+	var xp = document.getElementById('xp');
+	var money = document.getElementById('money');
 
 	//character sheet
 	$("#sheet .class").append(character['class']);
 	$("#sheet .sexe").append(character['sex']);
-	level.val(character['level']);
-	xp_max.append(100);
-	xp.val(character['xp']);
-	money.val(character['money'])
+	$(level).val(character['level']);
+	$(xp_max).append(100);
+	$(xp).val(character['xp']);
+	$(money).val(character['money'])
 
-	xp.change(function(){
-		if($(this).val() >= parseInt(xp_max.text())){
+	$(xp).change(function(){
+		if($(this).val() >= parseInt($(xp_max).text())){
 			levelUp();
 		}
 	});
-
-
 });
 
 function levelUp(){
