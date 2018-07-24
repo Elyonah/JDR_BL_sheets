@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Borderlands JDR UI Character File</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/module.css">
   <script
   	src="https://code.jquery.com/jquery-3.3.1.min.js"
   	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -14,12 +14,54 @@
 <body>
 
 <header>
-	Im the header	
-</header>
+    <h1 class="character_name"> Fiche de personnage de </h1>
+    <span class="player_name"> Joueur : </span>
+  </header>
 
-<div class="content">
-	<h1>Fiche de personnage : </h1>
-</div>
+  <div class="content">
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'sheet')">Fiche personnage</button>
+      <button class="tablinks" onclick="openTab(event, 'inventory')">Inventaire</button>
+      <button class="tablinks" onclick="openTab(event, 'skills')">Compétences</button>
+    </div>
+
+    
+    <div id="sheet" class="tabcontent">
+      <div class="class"> Classe : </div>
+      <div class="sexe"> Sexe : </div>
+      <div class="level">
+        <label for="level"> Niveau : </label>
+        <input type="number" id="level" name="level"/>
+        (
+          <input class="number" id="xp" name="xp"/> / <span id="xp_max"></span>
+        )
+       
+      </div>
+      <div class="money">
+        <label for="money">Argent : </label>
+        <input type="number" id="money" name="money"/>$
+      </div>
+
+      <div class="controls">
+         <button class="levelup" onclick="levelUp()">Faites moi level up !</button>
+      
+        <label for="money_cntrl">Argent :</label>
+
+        <input type="number" id="CtrlMoney">
+        <button class="addMoney" onClick="CtrlMoney('add')">Ajouter</button>
+        <button class="addMoney" onClick="CtrlMoney('remove')">Ajouter</button>
+      </div>
+    </div>
+
+    <div id="inventory" class="tabcontent">
+      
+     
+    </div>
+
+    <div id="skills" class="tabcontent">
+        
+    </div>
+  </div>
 
 <footer>
 	By Estelle

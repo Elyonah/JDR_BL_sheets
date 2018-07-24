@@ -2,13 +2,53 @@ $(document).ready(function(){
 	var character = JSON.parse(localStorage.getItem("character"));
 	console.log(character);
 
-	$("header h1").append(character['character_name'])
-	$("header span").append(character['player_name'])
+	/*var levels = getJsons('resources/level.json');*/
+	/*console.log(levels);*/
+
+	$("h1.character_name").append(character['character_name'])
+	$("span.player_name").append(character['player_name'])
+
+	var level = $(document.getElementById('level'));
+	var xp = $(document.getElementById('xp'));
+	var money = $(document.getElementById('money'));
+
+	//character sheet
+	$("#sheet .class").append(character['class']);
+	$("#sheet .sexe").append(character['sex']);
+	level.val(character['level']);
+	xp_max.append(100);
+	xp.val(character['xp']);
+	money.val(character['money'])
+
+	xp.change(function(){
+		if($(this).val() >= parseInt(xp_max.text())){
+			levelUp();
+		}
+	});
 
 
 });
 
-function openCity(evt, cityName) {
+function levelUp(){
+	$(level).val(parseInt($(level).val()) + 1)
+	$(xp).val(0)
+}
+
+function CtrlMoney(type){
+	var ctrlMoney = $("#CtrlMoney");
+	if(type === 'add'){
+		$(money).val(parseInt($(money).val()) + parseInt(ctrlMoney.val()))
+	}else{
+		var newAmount = parseInt($(money).val()) - parseInt(ctrlMoney.val());
+		if(parseInt(newAmount) <= 0){
+			$(money).val(0)
+		}else{
+			$(money).val(newAmount)
+		}
+	}
+}
+
+function openTab(evt, id) {
 	    // Declare all variables
 	    var i, tabcontent, tablinks;
 
@@ -25,6 +65,17 @@ function openCity(evt, cityName) {
 	    }
 
 	    // Show the current tab, and add an "active" class to the button that opened the tab
-	    document.getElementById(cityName).style.display = "block";
+	    document.getElementById(id).style.display = "block";
 	    evt.currentTarget.className += " active";
+	}
+
+	function getJsons(url){
+		$.getJSON( url, function( data ) {
+
+		  var items = [];
+		  $.each( data, function( key, val ) {
+		    items.push(key, val);
+		  });
+		  return items;
+		});
 	}
