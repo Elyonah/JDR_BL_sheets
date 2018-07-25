@@ -5,6 +5,8 @@ Gestion des fiches de personnage du JDR Borderlands
 ## TODO LIST
 
 - Voir avec Antoine les champs possibles pour chaque type (arme / grenade / mod class etc)
+- Gérer l'export et téléchargement fichier : récupérer tous les champs et les mettre dans un fichier json qui sera téléchargé.
+- Style
 
 ### Panneau Inventory :
 - Drag & Drop Main weapons to inventory et vice versa
@@ -15,10 +17,6 @@ https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javas
 ### Panneau Character :
 - Voir avec Antoine les stats d'un nouveau personnage (plusieurs json si stats différentes par classe ?)
 - Gérer nouveau personnage (pas super fonctionnel)
-
-### Utils :
-- Gérer l'export et téléchargement fichier : récupérer tous les champs et les mettre dans un fichier json qui sera téléchargé.
-- Style
 
 ### Panneau Skills :
 - Afficher tous les skills
