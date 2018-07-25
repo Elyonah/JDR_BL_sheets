@@ -92,5 +92,146 @@
 			"capacity_max": 3,
 			"value": 0
 		}
-	]
+	],
+	"skills": {
+		"competence_action": {
+			"name": "USB1.0",
+			"description": "",
+			"degats": 10,
+			"cooldown": 5
+		},
+		"point_restant": 0,
+		"tree1": [
+			{
+				"bonus": "Mon bonus",
+				"point": 0,
+				"level": 0,
+				"block": false
+			},
+			{
+				"bonus": "Mon bonus 2",
+				"point": 0,
+				"level": 0,
+				"block": false
+			},
+			{
+				"bonus": "Mon bonus 3",
+				"point": 0,
+				"level": 1,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 4",
+				"point": 0,
+				"level": 1,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 5",
+				"point": 0,
+				"level": 2,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 6",
+				"point": 0,
+				"level": 2,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 7",
+				"point": 0,
+				"level": 3,
+				"block": true
+			}
+		],
+		"tree2": [
+			{
+				"bonus": "Mon bonus Arbre 2",
+				"point": 0,
+				"level": 0,
+				"block": false
+			},
+			{
+				"bonus": "Mon bonus 2 ab2",
+				"point": 0,
+				"level": 0,
+				"block": false
+			},
+			{
+				"bonus": "Mon bonus 3 ab2",
+				"point": 0,
+				"level": 1,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 4 ab2",
+				"point": 0,
+				"level": 1,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 5 ab2",
+				"point": 0,
+				"level": 2,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 6 ab2",
+				"point": 0,
+				"level": 2,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 7 ab2",
+				"point": 0,
+				"level": 3,
+				"block": true
+			}
+		],
+		"tree3": [
+			{
+				"bonus": "Mon bonus Arbre 3",
+				"point": 0,
+				"level": 0,
+				"block": false
+			},
+			{
+				"bonus": "Mon bonus 2 ab3",
+				"point": 0,
+				"level": 0,
+				"block": false
+			},
+			{
+				"bonus": "Mon bonus 3 ab3",
+				"point": 0,
+				"level": 1,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 4 ab3",
+				"point": 0,
+				"level": 1,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 5 ab3",
+				"point": 0,
+				"level": 2,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 6 ab3",
+				"point": 0,
+				"level": 2,
+				"block": true
+			},
+			{
+				"bonus": "Mon bonus 7 ab3",
+				"point": 0,
+				"level": 3,
+				"block": true
+			}
+		]
+	}
 }
