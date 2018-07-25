@@ -5,9 +5,9 @@
 	"sex": "f",
 	"level": 1,
 	"xp": 0,
-	"money": 0,
-	"current_health": 250,
-	"max_health": 250,
+	"money": 80,
+	"current_health": 100,
+	"max_health": 100,
 	"current_shield": 0,
 	"max_shield": 0,
 	"primary_bag": {
@@ -36,7 +36,7 @@
 		"utils": [
 			{
 				"id": "cold_steel",
-				"empty": true
+				"empty": false
 			},
 			{
 				"id": "shield",
@@ -51,10 +51,6 @@
 			{
 				"id": "class_mod",
 				"empty": true
-			},
-			{
-				"id": "artefact",
-				"empty": true
 			}
 		]		
 	},
@@ -63,32 +59,37 @@
 	"ammo": [
 		{
 			"type": "Repeater pistol",
-			"capacity_max": 45,
+			"capacity_max": 200,
 			"value": 0
 		},
 		{
 			"type": "Revolvers",
-			"capacity_max": 45,
+			"capacity_max": 60,
 			"value": 0
 		}, 
 		{
 			"type": "SMG",
-			"capacity_max": 100,
+			"capacity_max": 360,
 			"value": 0
 		},
 		{
 			"type": "Shotguns",
-			"capacity_max": 45,
+			"capacity_max": 80,
 			"value": 0
 		},
 		{
 			"type": "Combat rifles",
-			"capacity_max": 45,
+			"capacity_max": 280,
 			"value": 0
 		},
 		{
 			"type": "Sniper rifles",
-			"capacity_max": 25,
+			"capacity_max": 48,
+			"value": 0
+		},
+		{
+			"type": "Grenad",
+			"capacity_max": 3,
 			"value": 0
 		}
 	]

@@ -15,7 +15,7 @@ $(document).ready(function(){
 	$("#character_name").val(character['character_name']);
 	$("#player_name").val(character['player_name']);
 	$("#class").append(character['class']);
-	$("#sexe").append(character['sex']);
+	$("#gender").append(character['gender']);
 	$("#current_level").append(character['level']);
 	$("#current_xp").append(character['xp']);
 	$("#max_xp").append('100');
