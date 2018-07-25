@@ -303,9 +303,3 @@ function openTab(evt, id) {
 	    document.getElementById(id).style.display = "block";
 	    evt.currentTarget.className += " active";
 }
-
-
-
-//TODO: Bouclier effet si vie max supp (début + équipement)
-//TODO drag & drop main weapons to inventory, etc :
-//https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1922434-le-drag-drop
