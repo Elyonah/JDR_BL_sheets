@@ -25,7 +25,6 @@
       <button class="tablinks" onclick="openTab(event, 'skills')">Skills</button>
     </div>
 
-    
     <div id="sheet" class="tabcontent">
       <div class="tab-content">
         <div class="left-section">
@@ -87,89 +86,101 @@
 
       <div class="controls">
         <h2>Barre de contrôle : </h2>
-       <input type="number" id="main_controller">
-       <button class="controller" onClick="Controller('add', 'health')">Régénerer vie</button>
-       <button class="controller" onClick="Controller('add', 'shield')">Régénerer bouclier</button>
-       <button class="controller" onClick="Controller('remove', 'health')">Se prendre un coup</button>
-       <button class="controller" onClick="Controller('add', 'xp')">Ajouter de l'xp</button>
-       <button class="controller" onClick="Controller('remove', 'xp')">Enlever de l'xp</button>
-       <button class="controller" onClick="Controller('add', 'level')">Ajouter un level</button>
-       <button class="controller" onClick="Controller('remove', 'level')">Enlever un level</button>
-     </div>
-   </div>
-   <div id="inventory" class="tabcontent">
+        <input type="number" id="main_controller">
+        <button class="controller" onClick="Controller('add', 'health')">Régénerer vie</button>
+        <button class="controller" onClick="Controller('add', 'shield')">Régénerer bouclier</button>
+        <button class="controller" onClick="Controller('remove', 'health')">Se prendre un coup</button>
+        <button class="controller" onClick="Controller('add', 'xp')">Ajouter de l'xp</button>
+        <button class="controller" onClick="Controller('remove', 'xp')">Enlever de l'xp</button>
+        <button class="controller" onClick="Controller('add', 'level')">Ajouter un level</button>
+        <button class="controller" onClick="Controller('remove', 'level')">Enlever un level</button>
+      </div>
+    </div>
+
+    <div id="inventory" class="tabcontent">
       <div class="tab-content">
         <div class="left-section">
           <div class="section">
             <div class="title">Backpack</div>
             <div class="content">
-              </span id="current_slots"></span>/<span id="total_slots"></span>
-              <div class="subtitle">Weapons</div>
-              <ul class="list-weapons">
-                
-              </ul>
-              <div class="subtitle">Artefacts</div>
-              <ul class="list-artefacts">
-                
-              </ul>
-              <div class="subtitle">Grenads</div>
-              <ul class="list-grenads">
-                
-              </ul>
-              <div class="subtitle">Class mod</div>
-              <ul class="list-mods">
-                
-              </ul>
-              <div class="subtitle">Shields</div>
-              <ul class="list-shields">
-                
-              </ul>
-            </div>
-            
-          </div>
-        </div>
-        <div class="right-section">
-          <div class="section">
-            <div class="title">Equipped</div>
-            <div class="main-weapons">
-              <div class="weapon-section main-weapon">
-              </div>
-              <div class="weapon-section secondary-weapon">
-              </div>
-              <div class="weapon-section third-weapon">
-              </div>
-              <div class="weapon-section fourth-weapon">
-              </div>
-            </div>
-            <div class="other-stuff">
-              <div class="weapon-section shield-cntnr">
-              </div>
-              <div class="weapon-section mod-grenad-cntnr">
-              </div>
-              <div class="weapon-section mod-class-cntnr">
-              </div>
-            </div>
-          </div>
-          <div class="section">
-            <div class="window">
-              <div class="window-name">
-                <div id="class"></div>
-              </div>
-              <div class="window-content">
+              <span id="current_slots"></span>/<span id="max_slots"></span>
+            <div class="subtitle">Weapons</div>
+            <ul class="inventory-list list-weapons">
+
+            </ul>
+            <div class="subtitle">Artefacts</div>
+            <ul class="inventory-list list-artefacts">
+
+            </ul>
+            <div class="subtitle">Grenads</div>
+            <ul class="inventory-list list-grenads">
+
+            </ul>
+            <div class="subtitle">Class mod</div>
+            <ul class="inventory-list list-mods">
+
+            </ul>
+            <div class="subtitle">Shields</div>
+            <ul class="inventory-list list-shields">
+            </ul>
+            <div class="section">
+              <div class="window" id="current_inventory_weapon">
+                <div class="window-name">
+                </div>
+                <div class="window-content">
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-   </div>
+      <div class="right-section">
+        <div class="section">
+          <div class="title">Equipped</div>
+          <div class="main-weapons">
+            <div class="weapon-section main-weapon" id="1">
+            </div>
+            <div class="weapon-section secondary-weapon" id="2">
+            </div>
+            <div class="weapon-section third-weapon" id="3">
+            </div>
+            <div class="weapon-section fourth-weapon" id="4">
+            </div>
+          </div>
+          <div class="other-stuff">
+            <div class="weapon-section shield-cntnr">
+            </div>
+            <div class="weapon-section artefact-cntnr">
+            </div>
+            <div class="weapon-section mod-grenad-cntnr">
+            </div>
+            <div class="weapon-section mod-class-cntnr">
+            </div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="window" id="current_primary_weapon">
+            <div class="window-name">
+            </div>
+            <div class="window-content">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="controls">
+        <h2>Barre de contrôle : </h2>
+        <button class="controller sell" onClick="ControllerSale()">Vendre cet item</button>
+        <button class="controller" onClick="Controller('add', 'health')">Régénerer vie</button>
+    </div>
+  </div>
 
-   <div id="skills" class="tabcontent">
+  <div id="skills" class="tabcontent">
 
-   </div>
- </div>
+  </div>
+</div>
 
- <footer>
-   By Estelle
- </footer>
+<footer>
+ By Estelle
+</footer>
 </body>
 </html>

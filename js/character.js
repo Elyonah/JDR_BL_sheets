@@ -1,15 +1,15 @@
+var main_inventory = [];
+var main_weapons = [];
+var level = document.getElementById('level');
+var xp = document.getElementById('xp');
+var money = document.getElementById('money');
+
 $(document).ready(function(){
 	var character = JSON.parse(localStorage.getItem("character"));
 
-	/*var levels = getJsons('resources/level.json');*/
-	/*console.log(levels);*/
-
+	//header
 	$("h1.character_name").append(character['character_name'])
 	$("span.player_name").append(character['player_name'])
-
-	var level = document.getElementById('level');
-	var xp = document.getElementById('xp');
-	var money = document.getElementById('money');
 
 	//character sheet
 	$("#character_name").val(character['character_name']);
@@ -25,71 +25,65 @@ $(document).ready(function(){
 	$("#max_health").append(character['max_health']);
 	$(".money").append(character['money']);
 
-
-	//inventory
-	var inventory = [];
-	var main_weapons = [];
-
+	$('#current_slots').append(character['current_slots'])
+	$('#max_slots').append(character['max_slots'])
 	character['inventory'].forEach(function(weapon, id){
 		if(weapon['eqquipped']){
 			main_weapons.push(weapon);
 		}else{
-			inventory.push(weapon);
+			main_inventory.push(weapon);
 		}
 	})
+	$("button.sell").hide();
 
-	inventory.forEach(function(item){
-		//rangement des armes
+	refreshList();
+
+	main_weapons.forEach(function(item, id){
 		if(item['type'] === "weapon"){
-			var listCntnr = $('.list-weapons');
+			var cntnr = $('.weapon-section#'+item['slot']);
+
+			cntnr.attr('data-list-id', id)
 			//TODO ajouter image selon type arme
-	    	var li = $('<li>')
-	        .addClass(item['rarity'])
-	        .html(item['type'] + ' ' + item['brand'])
-	        .appendTo(listCntnr);
-    	}
-
-    	//rangement des artefacts
-    	if(item['type'] === "artefact"){
-			var listCntnr = $('.list-artefacts');
-			//TODO ajouter image grenade
-	    	var li = $('<li>')
+	    	$('<div>')
+	        .addClass('item-name')
 	        .addClass(item['rarity'])
 	        .html(item['type'])
-	        .appendTo(listCntnr);
-    	}
+	        .appendTo(cntnr);
 
-    	//rangement des grenades
-    	if(item['type'] === "mod_grenade"){
-			var listCntnr = $('.list-grenads');
-			//TODO ajouter image grenade
-	    	var li = $('<li>')
-	        .addClass(item['rarity'])
-	        .html(item['type'] + ' ' + item['brand'])
-	        .appendTo(listCntnr);
-    	}
+	        $('<div>')
+	        .addClass('item-brand')
+	        .html(item['brand'])
+	        .appendTo(cntnr)
+		}
+	});
 
-    	//rangement des modes de class
-    	if(item['type'] === "mod_class"){
-			var listCntnr = $('.list-mods');
-			//TODO ajouter image grenade
-	    	var li = $('<li>')
-	        .addClass(item['rarity'])
-	        .html(item['type'])
-	        .appendTo(listCntnr);
-    	}
-
-    	//rangement des shields
-    	if(item['type'] === "shield"){
-			var listCntnr = $('.list-shields');
-			//TODO ajouter image grenade
-	    	var li = $('<li>')
-	        .addClass(item['rarity'])
-	        .html(item['type'])
-	        .appendTo(listCntnr);
-    	}
+	//affichage d'un item dans la fenêtre dédiée
+	$(".inventory-list li").click(function(){
+		var cntnr = $(".window#current_inventory_weapon");
+		var item = main_inventory[$(this).attr('id')];
+		cleanWindow(cntnr);
+		cntnr.attr("data-id", $(this).attr('id'));
+		cntnr.children('.window-name').append(item['type'])
+		cntnr.children('.window-content').append(item['rarity'])
+		$("button.sell").show();
 	})
+
+	$(".weapon-section").click(function(){
+		var cntnr = $(".window#current_primary_weapon");
+		var item = main_weapons[$(this).attr('data-list-id')];
+		cleanWindow(cntnr);
+		cntnr.attr('data-id', $(this).attr('data-list-id'))
+		cntnr.children('.window-name').append(item['type'])
+		cntnr.children('.window-content').append(item['rarity'])
+	});
+
 });
+
+function cleanWindow(cntnr){
+	console.log("Clean Window");
+	$(cntnr).children('.window-name').empty();
+	$(cntnr).children('.window-content').empty();
+}
 
 function Controller(type, section){
 	var controller = $("#main_controller");
@@ -190,6 +184,91 @@ function Controller(type, section){
 	}
 }
 
+function ControllerSale(){
+	var sell;
+    if (confirm("Voulez vous vraiment vendre cet item ? Attention, cette action est irréversible."))
+        sell = true;
+    else
+        sell = false;
+
+    if(sell){
+    	var cntnr = $(".window#current_inventory_weapon");
+    	var id_item = cntnr.attr('data-id');
+    	main_inventory.splice(parseInt(id_item), 1);
+    	cleanWindow(cntnr);
+    	refreshList();
+    }
+}
+
+function refreshList(){
+	console.log("refreshList");
+	//Clean list
+	$('.list-weapons').empty();
+	$('.list-artefacts').empty();
+	$('.list-grenads').empty();
+	$('.list-mods').empty();
+	$('.list-shields').empty();
+
+	//Repeuplage
+	main_inventory.forEach(function(item, id){
+		//rangement des armes
+		if(item['type'] === "weapon"){
+			var listCntnr = $('.list-weapons');
+			//TODO ajouter image selon type arme
+	    	$('<li>')
+	    	.attr('id', id)
+	        .addClass(item['rarity'])
+	        .html(item['type'] + ' ' + item['brand'])
+	        .appendTo(listCntnr);
+    	}
+
+    	//rangement des artefacts
+    	if(item['type'] === "artefact"){
+			var listCntnr = $('.list-artefacts');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	    	.attr('id', id)
+	        .addClass(item['rarity'])
+	        .html(item['type'])
+	        .appendTo(listCntnr);
+    	}
+
+    	//rangement des grenades
+    	if(item['type'] === "mod_grenade"){
+			var listCntnr = $('.list-grenads');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	    	.attr('id', id)
+	        .addClass(item['rarity'])
+	        .html(item['type'] + ' ' + item['brand'])
+	        .appendTo(listCntnr);
+    	}
+
+    	//rangement des modes de class
+    	if(item['type'] === "mod_class"){
+			var listCntnr = $('.list-mods');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	    	.attr('id', id)
+	        .addClass(item['rarity'])
+	        .html(item['type'])
+	        .appendTo(listCntnr);
+    	}
+
+    	//rangement des shields
+    	if(item['type'] === "shield"){
+			var listCntnr = $('.list-shields');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	    	.attr('id', id)
+	        .addClass(item['rarity'])
+	        .html(item['type'])
+	        .appendTo(listCntnr);
+    	}
+	})
+	
+}
+
 function CtrlMoney(type){
 	var ctrlMoney = $("#main_controller");
 	if(type === 'add'){
@@ -223,21 +302,10 @@ function openTab(evt, id) {
 	    // Show the current tab, and add an "active" class to the button that opened the tab
 	    document.getElementById(id).style.display = "block";
 	    evt.currentTarget.className += " active";
-	}
-
-	function getJsons(url){
-		$.getJSON( url, function( data ) {
-
-			var items = [];
-			$.each( data, function( key, val ) {
-				items.push(key, val);
-			});
-			return items;
-		});
-	}
+}
 
 
 
-	//TODO: Bouclier effet si vie max supp (début + équipement)
-	//TODO drag & drop main weapons to inventory, etc :
-	//https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1922434-le-drag-drop
+//TODO: Bouclier effet si vie max supp (début + équipement)
+//TODO drag & drop main weapons to inventory, etc :
+//https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1922434-le-drag-drop
