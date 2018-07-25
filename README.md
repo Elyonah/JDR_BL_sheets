@@ -4,7 +4,6 @@ Gestion des fiches de personnage du JDR Borderlands
 
 ## TODO LIST
 
-- ~~ Voir avec Antoine les champs possibles pour chaque type (arme / grenade / mod class etc) ~~
 - Gérer l'export et téléchargement fichier : récupérer tous les champs et les mettre dans un fichier json qui sera téléchargé.
 - Style (**réservé Estelle**)
 
