@@ -6,6 +6,10 @@
 	"level": 1,
 	"xp": 0,
 	"money": 0,
+	"current_health": 250,
+	"max_health": 250,
+	"current_shield": 0,
+	"max_shield": 0,
 	"primary_bag": {
 		"weapons": [
 			{

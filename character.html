@@ -6,65 +6,143 @@
   <title>Borderlands JDR UI Character File</title>
   <link rel="stylesheet" href="css/module.css">
   <script
-  	src="https://code.jquery.com/jquery-3.3.1.min.js"
-  	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  	crossorigin="anonymous"></script>
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
   <script src="js/character.js"></script>
 </head>
 <body>
 
-<header>
+  <header>
     <h1 class="character_name"> Fiche de personnage de </h1>
     <span class="player_name"> Joueur : </span>
   </header>
 
   <div class="content">
     <div class="tab">
-      <button class="tablinks" onclick="openTab(event, 'sheet')">Fiche personnage</button>
-      <button class="tablinks" onclick="openTab(event, 'inventory')">Inventaire</button>
-      <button class="tablinks" onclick="openTab(event, 'skills')">Compétences</button>
+      <button class="tablinks" onclick="openTab(event, 'sheet')">Character</button>
+      <button class="tablinks" onclick="openTab(event, 'inventory')">Inventory</button>
+      <button class="tablinks" onclick="openTab(event, 'skills')">Skills</button>
     </div>
 
     
     <div id="sheet" class="tabcontent">
-      <div class="class"> Classe : </div>
-      <div class="sexe"> Sexe : </div>
-      <div class="level">
-        <label for="level"> Niveau : </label>
-        <input type="number" id="level" name="level"/>
-        (
-          <input class="number" id="xp" name="xp"/> / <span id="xp_max"></span>
-        )
-       
-      </div>
-      <div class="money">
-        <label for="money">Argent : </label>
-        <input type="number" id="money" name="money"/>$
+      <div class="tab-content">
+        <div class="left-section">
+          <div class="section">
+            <label form="player_name"> Player name </label>
+            <input type="text" id="player_name" name="player_name"/>
+          </div>
+          <div class="section">
+            <label form="character_name"> Name </label>
+            <input type="text" id="character_name" name="character_name"/>
+          </div>
+          <div class="section">
+            <label form="character_name"> Sexe </label>
+            <span id="sexe"></span>
+          </div>
+          <div class="money">
+            <span class="dollar">$</span>
+          </div>
+        </div>
+        <div class="right-section">
+          <div class="section">
+            <div class="window">
+              <div class="window-name">
+                <div id="class"></div>
+              </div>
+              <div class="window-content">
+                <div class="level">
+                  <label for="level">Level</label>
+                  <div class="level-bar">
+                    <span id="current_level"></span>
+                  </div>
+                </div>
+                <div class="xp">
+                  <label for="xp">XP</label>
+                  <div class="xp-header">
+                    <span id="current_xp"></span> / <span id="max_xp"></span>
+                  </div>
+                  <div id="xp_bar"></div>
+                </div>
+                <div class="shield">
+                  <label for="shield"><img alt="shield" src=""/></label>
+                  <div class="shield-bar">
+                    <span id="current_shield"></span> / <span id="max_shield"></span>
+                    <span id="current_shield_cntnr"></span>
+                  </div>
+                </div>
+                <div class="health">
+                  <label for="health"><img alt="health" src=""/></label>
+                  <div class="health-bar">
+                    <span id="current_health"></span> / <span id="max_health"></span>
+                    <span id="current_health_cntnr"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="controls">
-         <button class="levelup" onclick="levelUp()">Faites moi level up !</button>
-      
-        <label for="money_cntrl">Argent :</label>
-
-        <input type="number" id="CtrlMoney">
-        <button class="addMoney" onClick="CtrlMoney('add')">Ajouter</button>
-        <button class="addMoney" onClick="CtrlMoney('remove')">Ajouter</button>
+        <h2>Barre de contrôle : </h2>
+       <input type="number" id="main_controller">
+       <button class="controller" onClick="Controller('add', 'health')">Régénerer vie</button>
+       <button class="controller" onClick="Controller('add', 'shield')">Régénerer bouclier</button>
+       <button class="controller" onClick="Controller('remove', 'health')">Se prendre un coup</button>
+       <button class="controller" onClick="Controller('add', 'xp')">Ajouter de l'xp</button>
+       <button class="controller" onClick="Controller('remove', 'xp')">Enlever de l'xp</button>
+       <button class="controller" onClick="Controller('add', 'level')">Ajouter un level</button>
+       <button class="controller" onClick="Controller('remove', 'level')">Enlever un level</button>
+     </div>
+   </div>
+   <div id="inventory" class="tabcontent">
+      <div class="tab-content">
+        <div class="left-section">
+          <div class="section">
+            <div class="title">Backpack</div>
+            <div class="content">
+              </span id="current_slots"></span>/<span id="total_slots"></span>
+            </div>
+            
+          </div>
+        </div>
+        <div class="right-section">
+          <div class="section">
+            <div class="title">Equipped</div>
+            <div class="main-weapons">
+              <div class="weapon-section main-weapon">
+              </div>
+              <div class="weapon-section secondary-weapon">
+              </div>
+              <div class="weapon-section third-weapon">
+              </div>
+              <div class="weapon-section fourth-weapon">
+              </div>
+            </div>
+            <div class="other-stuff"></div>
+          </div>
+          <div class="section">
+            <div class="window">
+              <div class="window-name">
+                <div id="class"></div>
+              </div>
+              <div class="window-content">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+   </div>
 
-    <div id="inventory" class="tabcontent">
-      
-     
-    </div>
+   <div id="skills" class="tabcontent">
 
-    <div id="skills" class="tabcontent">
-        
-    </div>
-  </div>
+   </div>
+ </div>
 
-<footer>
-	By Estelle
-</footer>
+ <footer>
+   By Estelle
+ </footer>
 </body>
 </html>
