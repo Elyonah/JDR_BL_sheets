@@ -192,11 +192,20 @@ function ControllerSale(){
         sell = false;
 
     if(sell){
-    	var cntnr = $(".window#current_inventory_weapon");
-    	var id_item = cntnr.attr('data-id');
-    	main_inventory.splice(parseInt(id_item), 1);
-    	cleanWindow(cntnr);
-    	refreshList();
+    	var price = Number(prompt("Veuillez entrer la valeur de revente", ""));
+    	console.log(price)
+    	console.log(price != null)
+    	console.log(isNaN(price))
+    	console.log(typeof price)
+    	if (price !== '' && ! isNaN(price)) {
+	    	var cntnr = $(".window#current_inventory_weapon");
+	    	var id_item = cntnr.attr('data-id');
+	    	main_inventory.splice(parseInt(id_item), 1);
+	    	cleanWindow(cntnr);
+	    	refreshList();
+    	}else{
+    		alert('Merci d\'entrer une valeur numérique.')
+    	}
     }
 }
 
