@@ -38,9 +38,57 @@ $(document).ready(function(){
 		}
 	})
 
-	console.log(main_weapons);
-	console.log(inventory);
+	inventory.forEach(function(item){
+		//rangement des armes
+		if(item['type'] === "weapon"){
+			var listCntnr = $('.list-weapons');
+			//TODO ajouter image selon type arme
+	    	var li = $('<li>')
+	        .addClass(item['rarity'])
+	        .html(item['type'] + ' ' + item['brand'])
+	        .appendTo(listCntnr);
+    	}
 
+    	//rangement des artefacts
+    	if(item['type'] === "artefact"){
+			var listCntnr = $('.list-artefacts');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	        .addClass(item['rarity'])
+	        .html(item['type'])
+	        .appendTo(listCntnr);
+    	}
+
+    	//rangement des grenades
+    	if(item['type'] === "mod_grenade"){
+			var listCntnr = $('.list-grenads');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	        .addClass(item['rarity'])
+	        .html(item['type'] + ' ' + item['brand'])
+	        .appendTo(listCntnr);
+    	}
+
+    	//rangement des modes de class
+    	if(item['type'] === "mod_class"){
+			var listCntnr = $('.list-mods');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	        .addClass(item['rarity'])
+	        .html(item['type'])
+	        .appendTo(listCntnr);
+    	}
+
+    	//rangement des shields
+    	if(item['type'] === "shield"){
+			var listCntnr = $('.list-shields');
+			//TODO ajouter image grenade
+	    	var li = $('<li>')
+	        .addClass(item['rarity'])
+	        .html(item['type'])
+	        .appendTo(listCntnr);
+    	}
+	})
 });
 
 function Controller(type, section){
@@ -92,10 +140,10 @@ function Controller(type, section){
 				$("#current_xp").html("0");
 				$("#max_health").html(parseInt($("#max_health").html()) + 15)
 			}
-
 			console.log(selected_section);
 			console.log(current_value);
 			selected_section.empty().html(current_value)
+			$("body").removeClass('combat-survie');
 		}
 	}else{
 		var current_value = parseInt(selected_section.html()) - value
@@ -104,29 +152,37 @@ function Controller(type, section){
 		if(section === 'health'){
 			//on prends la valeur restante du shield
 			var shield_value = parseInt($("#current_shield").html())
+			console.log('le bouclier a encore :', shield_value)
 			//Si le shield est encore up
-			if(shield_value != 0){
+			if(shield_value !== 0){
 				current_value = parseInt($("#current_shield").html() - value)
-				//Si le shield tombe, on le met à zéro
+				console.log(current_value);
+				console.log(current_value <= 0);
+				//Si le shield tombe, on le met à zéro et on soustrait le reste à la barre de vie
 				if(current_value <= 0){
+					console.log('le shield tombe parce que la current value est supérieur à ma valeur de shield')
 					$("#current_shield").empty().html("0")
-				}else{
-					//Sinon, on change l'objet appliqué
-					selected_section = $("#current_shield");
-					cntnr = $("#current_shield_cntnr");
-				}
-				//le reste est appliqué à la vie
-				if(current_value < 0){
 					var rest = 0 - current_value;
-					current_value = rest;
+					current_value = parseInt(selected_section.html()) - rest;
+					console.log('rest: ', current_value)
 				}
-			}			
+				else{
+					console.log('le shield tiens le coup !')
+					//Sinon on applique les dégâts au shield
+					selected_section = $("#current_shield");
+					cntnr = $("#current_shield_cntnr");					
+				}
+			}		
 		}
 
-		if(current_value > 0)
+		if(current_value >= 0){
+			console.log('je nai plus que ', current_value)
 			selected_section.html(current_value)
-		else 
+		} else {
 			selected_section.empty().html("0")
+			if(section === 'health')
+				$("body").addClass('combat-survie');
+		}
 	}
 
 	if (cntnr !== ''){
@@ -183,3 +239,5 @@ function openTab(evt, id) {
 
 
 	//TODO: Bouclier effet si vie max supp (début + équipement)
+	//TODO drag & drop main weapons to inventory, etc :
+	//https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1922434-le-drag-drop
