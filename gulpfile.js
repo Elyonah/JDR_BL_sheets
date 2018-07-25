@@ -26,5 +26,5 @@ gulp.task('dev', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('less/**/*.less', ['dev']);
+    gulp.watch('less/*.less', gulp.series('dev'));
 });
