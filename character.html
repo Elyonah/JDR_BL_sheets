@@ -91,10 +91,8 @@
         <button class="controller" onClick="Controller('add', 'health')">Régénerer vie</button>
         <button class="controller" onClick="Controller('add', 'shield')">Régénerer bouclier</button>
         <button class="controller" onClick="TakeHit()">Se prendre un coup</button>
-        <button class="controller" onClick="Controller('add', 'xp')">Ajouter de l'xp</button>
-        <button class="controller" onClick="Controller('remove', 'xp')">Enlever de l'xp</button>
-        <button class="controller" onClick="Controller('add', 'level')">Ajouter un level</button>
-        <button class="controller" onClick="Controller('remove', 'level')">Enlever un level</button>
+        <button class="controller" onClick="gainXP()">Ajouter de l'xp</button>
+        <button class="controller" type="hidden" onClick="Controller('remove', 'xp')">Enlever de l'xp</button>
       </div>
     </div>
 

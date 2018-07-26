@@ -105,8 +105,8 @@ function displaySkills(){
 
 function TakeHit(){
 	var value = parseInt($("#main_controller").val());
-	if(isNaN(value)){
-		alert('Merci d\'entrer un nombre');
+
+	if(!validate(value)){
 		return false;
 	}
 
@@ -117,12 +117,35 @@ function TakeHit(){
     }else{
         $("body").removeClass("combat-survie");
     }
-	refreshHealth();
+	refresh("current_health", character.current_health);
+	refresh("current_shield", character.current_shield);
 }
 
-function refreshHealth(){
-	$("#current_health").empty().html(character.current_health);
-	$("#current_shield").empty().html(character.current_shield);
+function gainXP(){
+    var value = parseInt($("#main_controller").val());
+    if(!validate(value)){
+        return false;
+    }
+
+    character.gainXP(value);
+
+    refresh("current_xp", character.current_xp);
+    refresh("max_xp", character.calcMaxXP());
+    console.log(character.current_level);
+    refresh("current_level", character.current_level);
+}
+
+//Validation input dans Controller
+function validate(value){
+    if(isNaN(value)){
+        alert('Merci d\'entrer un nombre');
+        return false;
+    } else
+    	return true;
+}
+
+function refresh(idCntnr, value){
+	$("#"+idCntnr).empty().html(value);
 }
 
 /*Permet de clean les fenêtres d'aperçu des armes*/

@@ -77,9 +77,11 @@ class Character{
         return 100 * Math.pow(2.5, (this.current_level - 1))
     }
     levelUp(){
+        console.log("Character:: levelUp")
         this.max_health = this.level + 15;
         this.max_xp = this.calcMaxXP();
         this.current_xp = 0;
+        this.current_level += 1;
     }
     regenHealth(){
         this.current_health = this.max_health;
@@ -104,6 +106,16 @@ class Character{
                 this.current_health -= dmg;
             else
                 this.current_health = 0;
+        }
+    }
+    gainXP(xp){
+        console.log("Character:: gainXP")
+        this.current_xp += xp;
+        if(this.current_xp >= this.calcMaxXP()){
+            var rest = this.current_xp - this.calcMaxXP();
+            this.levelUp();
+            if (rest !== 0)
+                this.current_xp += rest;
         }
     }
 
