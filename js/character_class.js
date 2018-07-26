@@ -14,53 +14,6 @@ class Character{
         this.money = 80;
     }
 
-    /*Getters & setters*/
-    set characterName(newName){
-        this.character_name = newName;
-    }
-    get characterName(){
-        return this.character_name;
-    }
-    set playerName(newName){
-        this.player_name = newName;
-    }
-    get playerName(){
-        return this.player_name;
-    }
-    get characterClass(){
-        return this.character_class;
-    }
-    get characterGender(){
-        return this.character_gender;
-    }
-    set currentLevel(currentLvl){
-        this.current_level =  currentLvl
-    }
-    get currentLevelt(){
-        return this.current_level;
-    }
-    set currentXP(currentXP){
-        this.current_xp = currentXP
-    }
-    get currentXP(){
-        return this.current_xp;
-    }
-    set currentHealth(newHealth){
-        this.current_health = newHealth;
-    }
-    get currentHealth(){
-        return this.current_health;
-    }
-    set currentShield(newShield){
-        this.current_shield = this.max_shield
-    }
-    set currentMoney(newAmount){
-        this.money = newAmount;
-    }
-    get currentMoney(){
-        return this.money;
-    }
-
     /*Methods*/
     setImportedCharacter(lvl, xp, shield, max_shield, health, money){
         printlog('Character:: SetImportedCharacter');
@@ -84,6 +37,8 @@ class Character{
         this.max_xp = this.calcMaxXP();
         this.current_xp = 0;
         this.current_level += 1;
+        this.current_health = this.max_health;
+        this.current_shield = this.max_shield;
     }
     regenHealth(){
         this.current_health = this.max_health;

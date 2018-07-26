@@ -12,7 +12,7 @@ $(document).ready(function(){
 		character_json['character_name'], 
 		character_json['class'], 
 		character_json['gender']
-	);
+		);
 
 	//If character imported
 	character.setImportedCharacter(
@@ -22,16 +22,44 @@ $(document).ready(function(){
 		character_json['max_shield'], 
 		character_json['current_health'], 
 		character_json['money']
-	);
+		);
 
+	character.inventory = new Inventory(character_json['max_slots'], character_json['enable_slots']);
+
+	var weapons_list = [];
+	var shields_list = [];
+	var mods_list = [];
+	var grenades_list = [];
+	var coldWeapon = null;
+	var coldSteel = null;
+
+	character_json['inventory'].forEach(function(item, id){
+		
+		//Si c'est une arme
+		if(item['type'] === itemType.WEAPON){
+			var weapon = new Weapon(item['weapon_type'], item['brand'], item['rarity'],
+				item['damages'], item['accuracy'], item['fire_rate'], item['reloading'],
+				item['recoil'], item['max_ammo'], item['current_ammo'], item['elementary'],
+				item['equipped'], item['slot'], item['critical_strike']);
+			weapons_list.push(weapon)
+		}
+
+		//Si c'est une arme (CAC)
+		if(item['type'] === itemType.COLD_STEEL){
+			coldSteel = new ColdSteel(item['description'], item['damages'])
+		}
+		
+	});
+
+	character.inventory['weapons'] = weapons_list
+	character.inventory['coldsteel'] = coldSteel
 
 	console.log(character);
 
-
 	displayHeader();
 	displaySheet();
-	/*displayInventory();
-	displaySkills();*/
+	displayInventory();
+	/*displaySkills();*/
 
 	//character sheet
 	/*$('#current_slots').append(character_json['current_slots'])
@@ -97,7 +125,6 @@ function displaySheet(){
 	$("#player_name").val(character.player_name);
 	$("#class").append(character.character_class);
 	$("#gender").append(character.character_gender);
-	console.log(character.character_gender);
 	$("#current_level").append(character.current_level);
 	$("#current_xp").append(character.current_xp);
 	$("#max_xp").append(character.calcMaxXP());
@@ -109,7 +136,24 @@ function displaySheet(){
 }
 
 function displayInventory(){
+	character['inventory']['weapons'].forEach(function(item, id){
+		var cntnr = $('.list-weapons');	
+		if(item['equipped']){
+			cntnr = $('.weapon-section#'+item['slot']);
+			cntnr.attr('data-list-id', id)
+		}
+		//TODO ajouter image selon type arme
+		var weaponCntnr = $('<div>')
+			.addClass('item-name')
+			.addClass(item['rarity'])
+			.html(item['weapon_type'])
+			.appendTo(cntnr);
 
+		$('<span>')
+			.addClass('item-brand')
+			.html(item['brand'])
+			.appendTo(weaponCntnr)
+	})
 }
 
 function displaySkills(){
@@ -125,11 +169,11 @@ function TakeHit(){
 
 	character.takeHit(value);
 
-    if(character.current_health === 0){
-        $("body").addClass("combat-survie");
-    }else{
-        $("body").removeClass("combat-survie");
-    }
+	if(character.current_health === 0){
+		$("body").addClass("combat-survie");
+	}else{
+		$("body").removeClass("combat-survie");
+	}
 	refresh("current_health", character.current_health);
 	refresh("current_shield", character.current_shield);
 	resetControllerInput();
@@ -137,13 +181,12 @@ function TakeHit(){
 
 function regenHealth(){
 	var value = parseInt($("#main_controller").val());
-	console.log(value)
 	var regenMax = false;
 	if(!validate(value)){
 		if (confirm("Voulez-vous vraiment régénérer toute votre vie ?")){
 			regenMax = true
 		} else
-			return false
+		return false
 		if(regenMax)
 			character.regenHealth();			
 	}else{
@@ -165,9 +208,9 @@ function regenShield(){
 		if (confirm("Voulez-vous vraiment régénérer tout votre bouclier ?")){
 			regenMax = true
 		} else
-			return false
+		return false
 		if(regenMax)
-				character.regenShield();			
+			character.regenShield();			
 	}else{
 		if(character.current_shield + value > character.max_shield)
 			character.regenShield();
@@ -180,19 +223,19 @@ function regenShield(){
 }
 
 function gainXP(){
-    var value = parseInt($("#main_controller").val());
-    if(!validate(value)){
-    	alert('Merci d\'entrer un nombre');
-        return false;
-    }
+	var value = parseInt($("#main_controller").val());
+	if(!validate(value)){
+		alert('Merci d\'entrer un nombre');
+		return false;
+	}
 
-    character.gainXP(value);
+	character.gainXP(value);
 
-    refresh("current_xp", character.current_xp);
-    refresh("max_xp", character.calcMaxXP());
-    refresh("current_level", character.current_level);
-    refresh("max_health", character.calcMaxHealth());
-    resetControllerInput();
+	refresh("current_xp", character.current_xp);
+	refresh("max_xp", character.calcMaxXP());
+	refresh("current_level", character.current_level);
+	refresh("max_health", character.calcMaxHealth());
+	resetControllerInput();
 }
 
 function correctXP(){
@@ -229,10 +272,10 @@ function correctLevel(){
 
 //Validation input dans Controller
 function validate(value){
-    if(isNaN(value)){
-        return false;
-    } else
-    	return true;
+	if(isNaN(value)){
+		return false;
+	} else
+	return true;
 }
 
 function refresh(idCntnr, value){
@@ -240,12 +283,11 @@ function refresh(idCntnr, value){
 }
 
 function resetControllerInput(){
-    $("#main_controller").val("");
+	$("#main_controller").val("");
 }
 
 /*Permet de clean les fenêtres d'aperçu des armes*/
 function cleanWindow(cntnr){
-	console.log("Clean Window");
 	$(cntnr).children('.window-name').empty();
 	$(cntnr).children('.window-content').empty();
 }
@@ -260,10 +302,6 @@ function ControllerSale(){
 
 	if(sell){
 		var price = Number(prompt("Veuillez entrer la valeur de revente", ""));
-		console.log(price)
-		console.log(price != null)
-		console.log(isNaN(price))
-		console.log(typeof price)
 		if (price !== '' && ! isNaN(price)) {
 			var cntnr = $(".window#current_inventory_weapon");
 			var id_item = cntnr.attr('data-id');

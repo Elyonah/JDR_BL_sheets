@@ -20,61 +20,9 @@ Taille explosion: (m)
 Mod_class :
 Tableau qui augmente telle ou telle compétence
 
-Weapon :
-type
-brand
-rarity
-weapon_type
-damages
-accuracy
-fire_rate 
-reloading
-recoil
-ammo
-elementary: false,
-eqquipped: true,
-critical_strike: (dégat si critique, certaines armes en ont des particuliers)
-slot (numéro du slot si équippé)
-
 Dégats critiques :
 toutes les armes : + 100% dégats
 sniper : + 200% dégats
-
-Elementary :
-Fire
-Explosiv
-Electric
-Corrosif
-
-Rarety:
-Grey
-White
-Green
-Blue
-Violet
-Orange
-
-Weapon Type : 
-Repeater pistol
-Revolvers
-SMG
-Shotguns
-Combat rifles
-Sniper rifles
-
-Brand : 
-DAHL
-HYPERION
-JAKOBS
-MALIWAN
-SES MUNITIONS
-TEDIORE
-TORGUE
-VLADOF
-
-Brand Shield ;
-ANSHIN
-PANGOLIN
 
 Level : 
 plafond = +150% à chaque nouveau level

@@ -9,104 +9,60 @@
 	"current_health": 100,
 	"current_shield": 100,
 	"max_shield": 100,
-	"primary_bag": {
-		"weapons": [
-			{
-				"id": "primary_weapon",
-				"enable": true,
-				"brand": "Dahl",
-				"rarity": "grey",
-				"type": "Sniper rifles",
-				"damages": 10,
-				"accuracy": 82,
-				"fire_rate": 0.5,
-				"reloading": 1,
-				"retreat": 0,
-				"ammo": 5,
-				"elementary": false
-			},
-			{
-				"id": "secondary_weapon",
-				"empty": true,
-				"enable": true
-			},
-			{
-				"id": "third_weapon",
-				"empty": true,
-				"enable": false
-			},
-			{
-				"id": "fourth_weapon",
-				"empty": true,
-				"enable": false
-			}
-		],
-		"utils": [
-			{
-				"id": "cold_steel",
-				"weapong": "katana court",
-				"damages": 10
-			},
-			{
-				"id": "shield",
-				"empty": true
-			},
-			{
-				"id": "grenade_mod",
-				"empty": true
-			},
-			{
-				"id": "class_mod",
-				"empty": true
-			}
-		]		
-	},
-	"current_slots": 10,
-	"max_slots": 20,
+	"max_slots": 8,
+	"enable_slots": 2,
 	"inventory": [
 		{
+			"type": "cold_steel",
+			"description": "Katana court",
+			"damages": 10
+		},
+		{
 			"type": "weapon",
-			"brand": "Dahl",
+			"brand": "dahl",
 			"rarity": "grey",
-			"weapon_type": "SMG",
+			"weapon_type": "sniper_rifles",
 			"damages": 15,
 			"accuracy": 70,
 			"fire_rate": 3,
-			"reloading": 1,
+			"recoil": 1,
 			"retreat": 5,
-			"ammo": 5,
+			"max_ammo": 5,
+			"current_ammo": 5,
 			"elementary": false,
-			"eqquipped": true,
+			"equipped": true,
 			"slot": 1
 		},
 		{
 			"type": "weapon",
-			"brand": "Dahl",
+			"brand": "dahl",
 			"rarity": "grey",
-			"weapon_type": "SMG",
+			"weapon_type": "smg",
 			"damages": 15,
 			"accuracy": 70,
 			"fire_rate": 3,
 			"reloading": 1,
-			"retreat": 5,
-			"ammo": 5,
+			"recoil": 5,
+			"max_ammo": 20,
+			"current_ammo": 20,
 			"elementary": false,
-			"eqquipped": true,
+			"equipped": true,
 			"slot": 2
 		},
 		{
 			"type": "weapon",
-			"brand": "Dahl",
+			"brand": "dahl",
 			"rarity": "grey",
-			"weapon_type": "SMG",
+			"weapon_type": "smg",
 			"damages": 15,
 			"accuracy": 70,
 			"fire_rate": 3,
 			"reloading": 1,
-			"retreat": 5,
-			"ammo": 5,
+			"recoil": 5,
+			"max_ammo": 20,
+			"current_ammo": 20,
 			"elementary": false,
-			"eqquipped": false
+			"equipped": false
 		}
 	],
 	"ammo": [

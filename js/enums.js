@@ -1,0 +1,49 @@
+/*Utile ?*/
+var itemType = {
+	WEAPON: 'weapon',
+	COLD_STEEL: 'cold_steel',
+	SHIELD: 'shield',
+	GRENAD: 'grenad',
+	MOD_CLASS: 'mod_class'
+}
+
+var Elementaries = {
+	FIRE: 'fire',
+	EXPLOSIV: 'explosive',
+	ELECTRIC: 'electric',
+	CORROSIF: 'corrosif'
+}
+
+var SBrands = {
+	ANSHIN: 'anshin',
+	PANGOLIN: 'pangolin'
+}
+
+var WBrands = {
+	DAHL: 'dahl',
+	HYPERION: 'hyperion',
+	JAKOBS: 'jakobs',
+	MALIWAN: 'maliwan',
+	SES_MUNITIONS: 'ses_munition',
+	TEDIORE: 'tediore',
+	TORGUE: 'torgue',
+	VLADOF: 'vladof'
+}
+
+var rarity = {
+	GREY: 'grey',
+	WHITE: 'white',
+	GREEN: 'green',
+	BLUE: 'blue',
+	ORANGE: 'orange',
+	VIOLET: 'violet'
+}
+
+var weapons = {
+  REPEATER_PISTOL: 'repeater_pistol',
+  REVOLVERS: 'revolvers',
+  SMG: 'smg',
+  SHOTGUNS: 'shotguns',
+  COMBAT_RIFLES: 'combat_rifles',
+  SNIPER_RIFLES: 'sniper_rifles'
+}
