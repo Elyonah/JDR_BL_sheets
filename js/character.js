@@ -100,13 +100,13 @@ function displayInventory(){
 }
 
 function displaySkills(){
-
 }
 
 function TakeHit(){
 	var value = parseInt($("#main_controller").val());
 
 	if(!validate(value)){
+		alert('Merci d\'entrer un nombre');
 		return false;
 	}
 
@@ -119,11 +119,59 @@ function TakeHit(){
     }
 	refresh("current_health", character.current_health);
 	refresh("current_shield", character.current_shield);
+	resetControllerInput();
+}
+
+function regenHealth(){
+	var value = parseInt($("#main_controller").val());
+	console.log(value)
+	var regenMax = false;
+	if(!validate(value)){
+		if (confirm("Voulez-vous vraiment régénérer toute votre vie ?")){
+			regenMax = true
+		} else
+			return false
+		if(regenMax)
+			character.regenHealth();			
+	}else{
+		if(character.current_health + value > character.max_health)
+			character.regenHealth();
+		else
+			character.current_health += value;
+		
+	}
+
+	refresh("current_health", character.current_health)
+	resetControllerInput();
+
+	
+}
+
+function regenShield(){
+	var value = parseInt($("#main_controller").val());
+	var regenMax = false;
+	if(!validate(value)){
+		if (confirm("Voulez-vous vraiment régénérer tout votre bouclier ?")){
+			regenMax = true
+		} else
+			return false
+		if(regenMax)
+				character.regenShield();			
+	}else{
+		if(character.current_shield + value > character.max_shield)
+			character.regenShield();
+		else
+			character.current_shield += value;
+	}
+
+	refresh("current_shield", character.current_shield)
+	resetControllerInput();
 }
 
 function gainXP(){
     var value = parseInt($("#main_controller").val());
     if(!validate(value)){
+    	alert('Merci d\'entrer un nombre');
         return false;
     }
 
@@ -133,12 +181,44 @@ function gainXP(){
     refresh("max_xp", character.calcMaxXP());
     refresh("current_level", character.current_level);
     refresh("max_health", character.calcMaxHealth());
+    resetControllerInput();
+}
+
+function correctXP(){
+	var value = parseInt($("#main_controller").val());
+
+	if(!validate(value)){
+		alert('Merci d\'entrer un nombre');
+		return false;
+	}
+
+	if(character.current_xp - value >= 0)
+		character.current_xp -= value;
+	else
+		character.current_xp = 0;
+
+	refresh("current_xp", character.current_xp);
+	resetControllerInput();
+}
+
+function correctLevel(){
+	var value = parseInt($("#main_controller").val());
+
+	if(!validate(value)){
+		alert('Merci d\'entrer un nombre');
+		return false;
+	}
+
+	if(character.current_level - value >= 1)
+		character.current_level -= value;
+	else
+		character.current_level = 1;
+	resetControllerInput();
 }
 
 //Validation input dans Controller
 function validate(value){
     if(isNaN(value)){
-        alert('Merci d\'entrer un nombre');
         return false;
     } else
     	return true;
@@ -148,29 +228,15 @@ function refresh(idCntnr, value){
 	$("#"+idCntnr).empty().html(value);
 }
 
+function resetControllerInput(){
+    $("#main_controller").val("");
+}
+
 /*Permet de clean les fenêtres d'aperçu des armes*/
 function cleanWindow(cntnr){
 	console.log("Clean Window");
 	$(cntnr).children('.window-name').empty();
 	$(cntnr).children('.window-content').empty();
-}
-
-function Controller(type, section){
-    var controller = $("#main_controller");
-    var value = parseInt(controller.val());
-
-    var id_selected_section = '';
-    var cntnr = '';
-
-    if(type === "add"){
-        
-    }else{
-       
-    }
-
-    if (cntnr !== ''){
-        //calcul de la nouvelle taille de la barre
-    }
 }
 
 /*Controller pour vente*/

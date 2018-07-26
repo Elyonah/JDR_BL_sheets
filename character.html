@@ -9,6 +9,7 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+  <script src="js/utils.js"></script>
   <script src="js/character_class.js"></script>
   <script src="js/character.js"></script>
 </head>
@@ -88,8 +89,8 @@
       <div class="controls">
         <h2>Barre de contrôle : </h2>
         <input type="number" id="main_controller">
-        <button class="controller" onClick="Controller('add', 'health')">Régénerer vie</button>
-        <button class="controller" onClick="Controller('add', 'shield')">Régénerer bouclier</button>
+        <button class="controller" onClick="regenHealth()">Régénerer vie</button>
+        <button class="controller" onClick="regenShield()">Régénerer bouclier</button>
         <button class="controller" onClick="TakeHit()">Se prendre un coup</button>
         <button class="controller" onClick="gainXP()">Ajouter de l'xp</button>
         <button class="controller" hidden="hidden" onClick="correctXP()">Enlever de l'xp</button>

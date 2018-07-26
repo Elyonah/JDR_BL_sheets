@@ -1,6 +1,6 @@
 class Character{
     constructor(player_name, character_name, character_class, character_gender){
-        console.log('Character:: constructor');
+        printlog('Character:: constructor');
         this.character_name = character_name;
         this.player_name = player_name;
         this.character_class = character_class;
@@ -40,16 +40,19 @@ class Character{
         return this.current_level;
     }
     set currentXP(currentXP){
-        this.current_xp =  currentXP
+        this.current_xp = currentXP
     }
     get currentXP(){
         return this.current_xp;
     }
-    set currentHealth(newhealth){
-        this.current_health = newhealth;
+    set currentHealth(newHealth){
+        this.current_health = newHealth;
     }
     get currentHealth(){
         return this.current_health;
+    }
+    set currentShield(newShield){
+        this.current_shield = this.max_shield
     }
     set currentMoney(newAmount){
         this.money = newAmount;
@@ -58,8 +61,9 @@ class Character{
         return this.money;
     }
 
+    /*Methods*/
     setImportedCharacter(lvl, xp, shield, max_shield, health, money){
-        console.log('Character:: SetImportedCharacter');
+        printlog('Character:: SetImportedCharacter');
         this.current_level = lvl;
         this.current_xp = xp;
         this.current_shield = shield;
@@ -75,7 +79,7 @@ class Character{
         return Math.round(100 * Math.pow(2.5, (this.current_level - 1)))
     }
     levelUp(){
-        console.log("Character:: levelUp")
+        printlog("Character:: levelUp")
         this.max_health = this.level + 15;
         this.max_xp = this.calcMaxXP();
         this.current_xp = 0;
@@ -88,7 +92,7 @@ class Character{
         this.current_shield = this.max_shield;
     }
     takeHit(dmg){
-        console.log("Character:: takeHit");
+        printlog("Character:: takeHit");
         if(this.current_shield > 0){
             var newValue = this.current_shield - dmg;
             this.current_shield = newValue;
@@ -107,7 +111,7 @@ class Character{
         }
     }
     gainXP(xp){
-        console.log("Character:: gainXP")
+        printlog("Character:: gainXP")
         this.current_xp += xp;
         if(this.current_xp >= this.calcMaxXP()){
             var rest = this.current_xp - this.calcMaxXP();
@@ -116,8 +120,8 @@ class Character{
                 this.current_xp += rest;
         }
     }
-
     toJson(){
+        printlog('Character:: toJson');
         var character_array = [];
         character_array["player_name"] = this.player_name;
         character_array["character_name"] = this.character_name;
