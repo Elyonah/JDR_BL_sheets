@@ -3,28 +3,19 @@ var main_weapons = [];
 var level = document.getElementById('level');
 var xp = document.getElementById('xp');
 var money = document.getElementById('money');
+var character = null;
+
+
 
 $(document).ready(function(){
-	var character = JSON.parse(localStorage.getItem("character"));
+	character = JSON.parse(localStorage.getItem("character"));
 
-	//header
-	$("h1.character_name").append(character['character_name'])
-	$("span.player_name").append(character['player_name'])
+	displayHeader();
+	displaySheet();
+	displayInventory();
+	displaySkills();
 
 	//character sheet
-	$("#character_name").val(character['character_name']);
-	$("#player_name").val(character['player_name']);
-	$("#class").append(character['class']);
-	$("#gender").append(character['gender']);
-	$("#current_level").append(character['level']);
-	$("#current_xp").append(character['xp']);
-	$("#max_xp").append('100');
-	$("#current_shield").append(character['current_shield']);
-	$("#max_shield").append(character['max_shield']);
-	$("#current_health").append(character['current_health']);
-	$("#max_health").append(character['max_health']);
-	$(".money").append(character['money']);
-
 	$('#current_slots').append(character['current_slots'])
 	$('#max_slots').append(character['max_slots'])
 	character['inventory'].forEach(function(weapon, id){
@@ -44,16 +35,16 @@ $(document).ready(function(){
 
 			cntnr.attr('data-list-id', id)
 			//TODO ajouter image selon type arme
-	    	$('<div>')
-	        .addClass('item-name')
-	        .addClass(item['rarity'])
-	        .html(item['type'])
-	        .appendTo(cntnr);
+			$('<div>')
+			.addClass('item-name')
+			.addClass(item['rarity'])
+			.html(item['type'])
+			.appendTo(cntnr);
 
-	        $('<div>')
-	        .addClass('item-brand')
-	        .html(item['brand'])
-	        .appendTo(cntnr)
+			$('<div>')
+			.addClass('item-brand')
+			.html(item['brand'])
+			.appendTo(cntnr)
 		}
 	});
 
@@ -76,15 +67,44 @@ $(document).ready(function(){
 		cntnr.children('.window-name').append(item['type'])
 		cntnr.children('.window-content').append(item['rarity'])
 	});
-
 });
 
+function displayHeader(){
+	$("h1.character_name").append(character['character_name'])
+	$("span.player_name").append(character['player_name'])
+}
+
+function displaySheet(){
+	$("#character_name").val(character['character_name']);
+	$("#player_name").val(character['player_name']);
+	$("#class").append(character['class']);
+	$("#gender").append(character['gender']);
+	$("#current_level").append(character['level']);
+	$("#current_xp").append(character['xp']);
+	$("#max_xp").append('100');
+	$("#current_shield").append(character['current_shield']);
+	$("#max_shield").append(character['max_shield']);
+	$("#current_health").append(character['current_health']);
+	$("#max_health").append(character['max_health']);
+	$(".money").append(character['money']);
+}
+
+function displayInventory(){
+
+}
+
+function displaySkills(){
+
+}
+
+/*Permet de clean les fenêtres d'aperçu des armes*/
 function cleanWindow(cntnr){
 	console.log("Clean Window");
 	$(cntnr).children('.window-name').empty();
 	$(cntnr).children('.window-content').empty();
 }
 
+/*Différents contrôles sur écran Sheet*/
 function Controller(type, section){
 	var controller = $("#main_controller");
 	var value = parseInt(controller.val());
@@ -125,7 +145,7 @@ function Controller(type, section){
 					$("#current_level").html(parseInt($("#current_level").html()) + 1)
 					$("#max_health").html(parseInt($("#max_health").html()) + 15)
 				}else
-					selected_section.html(max);
+				selected_section.html(max);
 			}else{
 				selected_section.html(current_value)
 			}
@@ -184,31 +204,33 @@ function Controller(type, section){
 	}
 }
 
+/*Controller pour vente*/
 function ControllerSale(){
 	var sell;
-    if (confirm("Voulez vous vraiment vendre cet item ? Attention, cette action est irréversible."))
-        sell = true;
-    else
-        sell = false;
+	if (confirm("Voulez vous vraiment vendre cet item ? Attention, cette action est irréversible."))
+		sell = true;
+	else
+		sell = false;
 
-    if(sell){
-    	var price = Number(prompt("Veuillez entrer la valeur de revente", ""));
-    	console.log(price)
-    	console.log(price != null)
-    	console.log(isNaN(price))
-    	console.log(typeof price)
-    	if (price !== '' && ! isNaN(price)) {
-	    	var cntnr = $(".window#current_inventory_weapon");
-	    	var id_item = cntnr.attr('data-id');
-	    	main_inventory.splice(parseInt(id_item), 1);
-	    	cleanWindow(cntnr);
-	    	refreshList();
-    	}else{
-    		alert('Merci d\'entrer une valeur numérique.')
-    	}
-    }
+	if(sell){
+		var price = Number(prompt("Veuillez entrer la valeur de revente", ""));
+		console.log(price)
+		console.log(price != null)
+		console.log(isNaN(price))
+		console.log(typeof price)
+		if (price !== '' && ! isNaN(price)) {
+			var cntnr = $(".window#current_inventory_weapon");
+			var id_item = cntnr.attr('data-id');
+			main_inventory.splice(parseInt(id_item), 1);
+			cleanWindow(cntnr);
+			refreshList();
+		}else{
+			alert('Merci d\'entrer une valeur numérique.')
+		}
+	}
 }
 
+/*Refresh list Inventaire*/
 function refreshList(){
 	console.log("refreshList");
 	//Clean list
@@ -224,60 +246,60 @@ function refreshList(){
 		if(item['type'] === "weapon"){
 			var listCntnr = $('.list-weapons');
 			//TODO ajouter image selon type arme
-	    	$('<li>')
-	    	.attr('id', id)
-	        .addClass(item['rarity'])
-	        .html(item['type'] + ' ' + item['brand'])
-	        .appendTo(listCntnr);
-    	}
+			$('<li>')
+			.attr('id', id)
+			.addClass(item['rarity'])
+			.html(item['type'] + ' ' + item['brand'])
+			.appendTo(listCntnr);
+		}
 
     	//rangement des artefacts
     	if(item['type'] === "artefact"){
-			var listCntnr = $('.list-artefacts');
+    		var listCntnr = $('.list-artefacts');
 			//TODO ajouter image grenade
-	    	var li = $('<li>')
-	    	.attr('id', id)
-	        .addClass(item['rarity'])
-	        .html(item['type'])
-	        .appendTo(listCntnr);
-    	}
+			var li = $('<li>')
+			.attr('id', id)
+			.addClass(item['rarity'])
+			.html(item['type'])
+			.appendTo(listCntnr);
+		}
 
     	//rangement des grenades
     	if(item['type'] === "mod_grenade"){
-			var listCntnr = $('.list-grenads');
+    		var listCntnr = $('.list-grenads');
 			//TODO ajouter image grenade
-	    	var li = $('<li>')
-	    	.attr('id', id)
-	        .addClass(item['rarity'])
-	        .html(item['type'] + ' ' + item['brand'])
-	        .appendTo(listCntnr);
-    	}
+			var li = $('<li>')
+			.attr('id', id)
+			.addClass(item['rarity'])
+			.html(item['type'] + ' ' + item['brand'])
+			.appendTo(listCntnr);
+		}
 
     	//rangement des modes de class
     	if(item['type'] === "mod_class"){
-			var listCntnr = $('.list-mods');
+    		var listCntnr = $('.list-mods');
 			//TODO ajouter image grenade
-	    	var li = $('<li>')
-	    	.attr('id', id)
-	        .addClass(item['rarity'])
-	        .html(item['type'])
-	        .appendTo(listCntnr);
-    	}
+			var li = $('<li>')
+			.attr('id', id)
+			.addClass(item['rarity'])
+			.html(item['type'])
+			.appendTo(listCntnr);
+		}
 
     	//rangement des shields
     	if(item['type'] === "shield"){
-			var listCntnr = $('.list-shields');
+    		var listCntnr = $('.list-shields');
 			//TODO ajouter image grenade
-	    	var li = $('<li>')
-	    	.attr('id', id)
-	        .addClass(item['rarity'])
-	        .html(item['type'])
-	        .appendTo(listCntnr);
-    	}
+			var li = $('<li>')
+			.attr('id', id)
+			.addClass(item['rarity'])
+			.html(item['type'])
+			.appendTo(listCntnr);
+		}
 	})
-	
 }
 
+/*Old Money Cntrl*/
 function CtrlMoney(type){
 	var ctrlMoney = $("#main_controller");
 	if(type === 'add'){
@@ -292,23 +314,24 @@ function CtrlMoney(type){
 	}
 }
 
+/*Tabber*/
 function openTab(evt, id) {
-	    // Declare all variables
-	    var i, tabcontent, tablinks;
+	// Declare all variables
+	var i, tabcontent, tablinks;
 
-	    // Get all elements with class="tabcontent" and hide them
-	    tabcontent = document.getElementsByClassName("tabcontent");
-	    for (i = 0; i < tabcontent.length; i++) {
-	    	tabcontent[i].style.display = "none";
-	    }
+	// Get all elements with class="tabcontent" and hide them
+	tabcontent = document.getElementsByClassName("tabcontent");
+	for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
+	}
 
-	    // Get all elements with class="tablinks" and remove the class "active"
-	    tablinks = document.getElementsByClassName("tablinks");
-	    for (i = 0; i < tablinks.length; i++) {
-	    	tablinks[i].className = tablinks[i].className.replace(" active", "");
-	    }
-
-	    // Show the current tab, and add an "active" class to the button that opened the tab
-	    document.getElementById(id).style.display = "block";
-	    evt.currentTarget.className += " active";
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+    	tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(id).style.display = "block";
+    evt.currentTarget.className += " active";
 }
