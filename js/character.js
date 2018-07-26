@@ -5,20 +5,26 @@ var xp = document.getElementById('xp');
 var money = document.getElementById('money');
 var character = null;
 
-
-
 $(document).ready(function(){
-	character = JSON.parse(localStorage.getItem("character"));
+	character_json = JSON.parse(localStorage.getItem("character"));
+	character = new Character(character_json['player_name'], character_json['character_name'], character_json['class'], character_json['sex']);
+
+	//If character imported
+	character.setImportedCharacter(character_json['level'], character_json['xp'], character_json['current_shield'], character_json['max_shield'], character_json['current_health'], character_json['money']);
+
+
+	console.log(character);
+
 
 	displayHeader();
 	displaySheet();
-	displayInventory();
-	displaySkills();
+	/*displayInventory();
+	displaySkills();*/
 
 	//character sheet
-	$('#current_slots').append(character['current_slots'])
-	$('#max_slots').append(character['max_slots'])
-	character['inventory'].forEach(function(weapon, id){
+	/*$('#current_slots').append(character_json['current_slots'])
+	$('#max_slots').append(character_json['max_slots'])
+	character_json['inventory'].forEach(function(weapon, id){
 		if(weapon['eqquipped']){
 			main_weapons.push(weapon);
 		}else{
@@ -66,27 +72,27 @@ $(document).ready(function(){
 		cntnr.attr('data-id', $(this).attr('data-list-id'))
 		cntnr.children('.window-name').append(item['type'])
 		cntnr.children('.window-content').append(item['rarity'])
-	});
+	});*/
 });
 
 function displayHeader(){
-	$("h1.character_name").append(character['character_name'])
-	$("span.player_name").append(character['player_name'])
+	$("h1.character_name").append(character.character_name)
+	$("span.player_name").append(character.player_name)
 }
 
 function displaySheet(){
-	$("#character_name").val(character['character_name']);
-	$("#player_name").val(character['player_name']);
-	$("#class").append(character['class']);
-	$("#gender").append(character['gender']);
-	$("#current_level").append(character['level']);
-	$("#current_xp").append(character['xp']);
-	$("#max_xp").append('100');
-	$("#current_shield").append(character['current_shield']);
-	$("#max_shield").append(character['max_shield']);
-	$("#current_health").append(character['current_health']);
-	$("#max_health").append(character['max_health']);
-	$(".money").append(character['money']);
+	$("#character_name").val(character.character_name);
+	$("#player_name").val(character.player_name);
+	$("#class").append(character.character_class);
+	$("#gender").append(character.character_gender);
+	$("#current_level").append(character.current_level);
+	$("#current_xp").append(character.current_xp);
+	$("#max_xp").append(character.calcMaxXP());
+	$("#current_shield").append(character.current_shield);
+	$("#max_shield").append(character.max_shield);
+	$("#current_health").append(character.current_health);
+	$("#max_health").append(character.calcMaxHealth());
+	$(".money").append(character.money);
 }
 
 function displayInventory(){
@@ -104,8 +110,26 @@ function cleanWindow(cntnr){
 	$(cntnr).children('.window-content').empty();
 }
 
-/*Différents contrôles sur écran Sheet*/
 function Controller(type, section){
+    var controller = $("#main_controller");
+    var value = parseInt(controller.val());
+
+    var id_selected_section = '';
+    var cntnr = '';
+
+    if(type === "add"){
+        
+    }else{
+       
+    }
+
+    if (cntnr !== ''){
+        //calcul de la nouvelle taille de la barre
+    }
+}
+
+/*Différents contrôles sur écran Sheet*/
+/*function Controller(type, section){
 	var controller = $("#main_controller");
 	var value = parseInt(controller.val());
 
@@ -202,7 +226,7 @@ function Controller(type, section){
 	if (cntnr !== ''){
 		//calcul de la nouvelle taille de la barre
 	}
-}
+}*/
 
 /*Controller pour vente*/
 function ControllerSale(){

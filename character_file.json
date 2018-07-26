@@ -7,7 +7,6 @@
 	"xp": 75,
 	"money": 80,
 	"current_health": 100,
-	"max_health": 100,
 	"current_shield": 100,
 	"max_shield": 100,
 	"primary_bag": {
