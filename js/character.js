@@ -7,10 +7,22 @@ var character = null;
 
 $(document).ready(function(){
 	character_json = JSON.parse(localStorage.getItem("character"));
-	character = new Character(character_json['player_name'], character_json['character_name'], character_json['class'], character_json['sex']);
+	character = new Character(
+		character_json['player_name'], 
+		character_json['character_name'], 
+		character_json['class'], 
+		character_json['gender']
+	);
 
 	//If character imported
-	character.setImportedCharacter(character_json['level'], character_json['xp'], character_json['current_shield'], character_json['max_shield'], character_json['current_health'], character_json['money']);
+	character.setImportedCharacter(
+		character_json['level'], 
+		character_json['xp'], 
+		character_json['current_shield'], 
+		character_json['max_shield'], 
+		character_json['current_health'], 
+		character_json['money']
+	);
 
 
 	console.log(character);
@@ -85,6 +97,7 @@ function displaySheet(){
 	$("#player_name").val(character.player_name);
 	$("#class").append(character.character_class);
 	$("#gender").append(character.character_gender);
+	console.log(character.character_gender);
 	$("#current_level").append(character.current_level);
 	$("#current_xp").append(character.current_xp);
 	$("#max_xp").append(character.calcMaxXP());
@@ -143,8 +156,6 @@ function regenHealth(){
 
 	refresh("current_health", character.current_health)
 	resetControllerInput();
-
-	
 }
 
 function regenShield(){
