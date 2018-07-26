@@ -103,6 +103,28 @@ function displaySkills(){
 
 }
 
+function TakeHit(){
+	var value = parseInt($("#main_controller").val());
+	if(isNaN(value)){
+		alert('Merci d\'entrer un nombre');
+		return false;
+	}
+
+	character.takeHit(value);
+
+    if(character.current_health === 0){
+        $("body").addClass("combat-survie");
+    }else{
+        $("body").removeClass("combat-survie");
+    }
+	refreshHealth();
+}
+
+function refreshHealth(){
+	$("#current_health").empty().html(character.current_health);
+	$("#current_shield").empty().html(character.current_shield);
+}
+
 /*Permet de clean les fenêtres d'aperçu des armes*/
 function cleanWindow(cntnr){
 	console.log("Clean Window");

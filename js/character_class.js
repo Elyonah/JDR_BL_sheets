@@ -88,11 +88,15 @@ class Character{
         this.current_shield = this.max_shield;
     }
     takeHit(dmg){
+        console.log("Character:: takeHit");
         if(this.current_shield > 0){
             var newValue = this.current_shield - dmg;
+            this.current_shield = newValue;
             if(newValue <= 0){
                 this.current_shield = 0;
+                console.log('shield is at : ', this.current_shield)
                 var rest = 0 - newValue;
+                console.log('but it remain : ', rest)
                 this.current_health -= rest;
             }
         }else{

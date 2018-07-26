@@ -31,7 +31,6 @@ https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javas
 
 ### Panneau Character :
 
-- Voir avec Antoine les stats d'un nouveau personnage
 - Gérer nouveau personnage (pas super fonctionnel)
 
 ### Panneau Skills :
