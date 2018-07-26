@@ -131,8 +131,8 @@ function gainXP(){
 
     refresh("current_xp", character.current_xp);
     refresh("max_xp", character.calcMaxXP());
-    console.log(character.current_level);
     refresh("current_level", character.current_level);
+    refresh("max_health", character.calcMaxHealth());
 }
 
 //Validation input dans Controller
@@ -172,106 +172,6 @@ function Controller(type, section){
         //calcul de la nouvelle taille de la barre
     }
 }
-
-/*Différents contrôles sur écran Sheet*/
-/*function Controller(type, section){
-	var controller = $("#main_controller");
-	var value = parseInt(controller.val());
-
-	var id_selected_section = '';
-	var cntnr = '';
-	var max = '';
-
-	switch(section){
-		case 'health' :
-		selected_section = $("#current_health");
-		cntnr = $("#current_health_cntnr");
-		max = parseInt($("#max_health").html());
-		break;
-		case 'shield' :
-		selected_section = $("#current_shield");
-		cntnr = $("#current_shield_cntnr");
-		max = parseInt($("#max_shield").html());
-		break;
-		case 'xp' :
-		selected_section = $("#current_xp");
-		max = parseInt($("#max_xp").html());
-		cntnr = $("#xp_bar");
-		break;
-		case 'level':
-		selected_section = $("#current_level");
-		break;
-		default:
-		break;
-	}
-
-	if(type === "add"){
-		var current_value = parseInt(selected_section.html()) + value;
-		if(max !== ''){
-			if(current_value >= max){
-				if(section === 'xp'){
-					selected_section.html("0");
-					$("#current_level").html(parseInt($("#current_level").html()) + 1)
-					$("#max_health").html(parseInt($("#max_health").html()) + 15)
-				}else
-				selected_section.html(max);
-			}else{
-				selected_section.html(current_value)
-			}
-		}else{
-			if(section === 'level'){
-				$("#current_xp").html("0");
-				$("#max_health").html(parseInt($("#max_health").html()) + 15)
-			}
-			console.log(selected_section);
-			console.log(current_value);
-			selected_section.empty().html(current_value)
-			$("body").removeClass('combat-survie');
-		}
-	}else{
-		var current_value = parseInt(selected_section.html()) - value
-
-		//Si on se prends un coup
-		if(section === 'health'){
-			//on prends la valeur restante du shield
-			var shield_value = parseInt($("#current_shield").html())
-			console.log('le bouclier a encore :', shield_value)
-			//Si le shield est encore up
-			if(shield_value !== 0){
-				current_value = parseInt($("#current_shield").html() - value)
-				console.log(current_value);
-				console.log(current_value <= 0);
-				//Si le shield tombe, on le met à zéro et on soustrait le reste à la barre de vie
-				if(current_value <= 0){
-					console.log('le shield tombe parce que la current value est supérieur à ma valeur de shield')
-					$("#current_shield").empty().html("0")
-					var rest = 0 - current_value;
-					current_value = parseInt(selected_section.html()) - rest;
-					console.log('rest: ', current_value)
-				}
-				else{
-					console.log('le shield tiens le coup !')
-					//Sinon on applique les dégâts au shield
-					selected_section = $("#current_shield");
-					cntnr = $("#current_shield_cntnr");					
-				}
-			}		
-		}
-
-		if(current_value >= 0){
-			console.log('je nai plus que ', current_value)
-			selected_section.html(current_value)
-		} else {
-			selected_section.empty().html("0")
-			if(section === 'health')
-				$("body").addClass('combat-survie');
-		}
-	}
-
-	if (cntnr !== ''){
-		//calcul de la nouvelle taille de la barre
-	}
-}*/
 
 /*Controller pour vente*/
 function ControllerSale(){

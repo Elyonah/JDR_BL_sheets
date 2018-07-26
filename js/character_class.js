@@ -1,6 +1,4 @@
 class Character{
-
-
     constructor(player_name, character_name, character_class, character_gender){
         console.log('Character:: constructor');
         this.character_name = character_name;
@@ -74,7 +72,7 @@ class Character{
         return 100 + (15 * (this.current_level - 1));
     }
     calcMaxXP(){
-        return 100 * Math.pow(2.5, (this.current_level - 1))
+        return Math.round(100 * Math.pow(2.5, (this.current_level - 1)))
     }
     levelUp(){
         console.log("Character:: levelUp")
