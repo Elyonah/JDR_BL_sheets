@@ -7,6 +7,21 @@ Gestion des fiches de personnage du JDR Borderlands
 - Gérer l'export et téléchargement fichier : récupérer tous les champs et les mettre dans un fichier json qui sera téléchargé.
 - Style (**réservé Estelle**)
 
+
+### Classes
+- Character.js (main class à priori)
+- Inventory.js
+- Item.js
+- Skills.js
+
+### Enum
+- Weapon type
+- Brand weapon
+- Brand shield
+- Elementary ?
+- Grenad type
+- Rarity
+
 ### Panneau Inventory :
 
 - Drag & Drop Main weapons to inventory et vice versa
