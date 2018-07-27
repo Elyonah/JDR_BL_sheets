@@ -110,9 +110,6 @@
                 <div class="subtitle">Weapons</div>
                 <ul class="inventory-list list-weapons">
                 </ul>
-                <div class="subtitle">Artefacts</div>
-                <ul class="inventory-list list-artefacts">
-                </ul>
                 <div class="subtitle">Grenads</div>
                 <ul class="inventory-list list-grenads">
                 </ul>
@@ -168,8 +165,9 @@
         <div class="controls">
           <h2>Barre de contrôle : </h2>
           <button class="item-controller sell" onClick="ControllerSale()">Vendre cet item</button>
+          <button class="item-controller drop" onClick="ControllerDrop()">Jeter cette arme</button>
           <select class="item-controller slots">
-            <option value="" selected disabled>Déplacer cet item...</option>
+            <option value="" selected>Déplacer cet item...</option>
           </select>
         </div>
       </div>
