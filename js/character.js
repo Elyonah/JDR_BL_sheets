@@ -113,6 +113,9 @@ function displaySheet(){
 function displayInventory(){
     $('.list-weapons').empty();
     $('.weapon-section').empty();
+    refresh('current_slots', character.inventory.countAllInventoryItems())
+    refresh("max_slots", character.inventory['max_inventory_slots'])
+
 	character['inventory']['weapons'].forEach(function(item, id){
 		var cntnr = $('.list-weapons');	
 		if(item['equipped']){
@@ -160,6 +163,7 @@ function displayInventory(){
 function displaySlots(){
 	var enable_slots = parseInt(character.inventory['enable_weapons_slots'])
 	$('.main-weapons > .weapon-section').each(function(id, item){
+		$(item).removeClass('disabled')
 		if(id >= enable_slots)
 			$(item).addClass('disabled')
 	})
@@ -439,4 +443,16 @@ function ControllerDrop(){
 	}
 	//TODO: Afficher la dropPool
 	displayInventory();
+}
+
+function UnlockSlot(){
+	if(character.inventory['enable_weapons_slots'] < character.inventory['max_weapons_slots']){
+		character.inventory.unlockWeaponSlot();
+        displaySlots();
+	}
+}
+
+function UnlockInventorySlots(){
+	character.inventory.unlockSlots();
+    refresh("max_slots", character.inventory['max_inventory_slots'])
 }

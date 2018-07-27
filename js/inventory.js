@@ -23,6 +23,11 @@ class Inventory{
 		}
 	}
 
+	countAllInventoryItems(){
+		printlog('Inventory:: countAllInventoryItems')
+		return this.countUnequippedWeapons()
+	}
+
 	countAvailablesSlots(){
 		printlog('Inventory:: countAvailablesSlots')
 		return this.max_inventory_slots - this.countUnequippedWeapons()
