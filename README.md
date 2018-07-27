@@ -26,6 +26,7 @@ Gestion des fiches de personnage du JDR Borderlands
 
 - Drag & Drop Main weapons to inventory et vice versa
 https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1922434-le-drag-drop
+https://course.oc-static.com/ftp-tutos/cours/javascript/part5/chap5/ex9.html 
 - Fonction vendre => input pour montant, ajouter dans money.
 - Fonction ajouter un item dans l'inventaire, form pour stats + retirer argent si c'est un achat.
 

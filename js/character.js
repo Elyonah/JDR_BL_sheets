@@ -4,6 +4,7 @@ var level = document.getElementById('level');
 var xp = document.getElementById('xp');
 var money = document.getElementById('money');
 var character = null;
+var current_item_cntnr = null;
 
 $(document).ready(function(){
 	character_json = JSON.parse(localStorage.getItem("character"));
@@ -41,6 +42,7 @@ $(document).ready(function(){
 				item['damages'], item['accuracy'], item['fire_rate'], item['reloading'],
 				item['recoil'], item['max_ammo'], item['current_ammo'], item['elementary'],
 				item['equipped'], item['slot'], item['critical_strike']);
+			weapon.id = id
 			weapons_list.push(weapon)
 		}
 
@@ -48,7 +50,6 @@ $(document).ready(function(){
 		if(item['type'] === itemType.COLD_STEEL){
 			coldSteel = new ColdSteel(item['description'], item['damages'])
 		}
-		
 	});
 
 	character.inventory['weapons'] = weapons_list
@@ -61,59 +62,42 @@ $(document).ready(function(){
 	displayInventory();
 	/*displaySkills();*/
 
-	//character sheet
-	/*$('#current_slots').append(character_json['current_slots'])
-	$('#max_slots').append(character_json['max_slots'])
-	character_json['inventory'].forEach(function(weapon, id){
-		if(weapon['eqquipped']){
-			main_weapons.push(weapon);
-		}else{
-			main_inventory.push(weapon);
-		}
-	})
-	$("button.sell").hide();
+    $(".item-controller").hide()
 
-	refreshList();
-
-	main_weapons.forEach(function(item, id){
-		if(item['type'] === "weapon"){
-			var cntnr = $('.weapon-section#'+item['slot']);
-
-			cntnr.attr('data-list-id', id)
-			//TODO ajouter image selon type arme
-			$('<div>')
-			.addClass('item-name')
-			.addClass(item['rarity'])
-			.html(item['type'])
-			.appendTo(cntnr);
-
-			$('<div>')
-			.addClass('item-brand')
-			.html(item['brand'])
-			.appendTo(cntnr)
-		}
-	});
-
-	//affichage d'un item dans la fenêtre dédiée
-	$(".inventory-list li").click(function(){
-		var cntnr = $(".window#current_inventory_weapon");
-		var item = main_inventory[$(this).attr('id')];
-		cleanWindow(cntnr);
-		cntnr.attr("data-id", $(this).attr('id'));
-		cntnr.children('.window-name').append(item['type'])
-		cntnr.children('.window-content').append(item['rarity'])
-		$("button.sell").show();
-	})
-
-	$(".weapon-section").click(function(){
-		var cntnr = $(".window#current_primary_weapon");
-		var item = main_weapons[$(this).attr('data-list-id')];
-		cleanWindow(cntnr);
-		cntnr.attr('data-id', $(this).attr('data-list-id'))
-		cntnr.children('.window-name').append(item['type'])
-		cntnr.children('.window-content').append(item['rarity'])
-	});*/
+    $(".item.weapon").on('click', clickWeapon)
+    $(".item-controller.slots").on('change', ControllerSlot)
 });
+
+
+function getItem(index){
+	var selected_item = character.inventory['weapons'].find(function(element) {
+        return element.id === index;
+    });
+	return selected_item;
+}
+
+function cleanActiveItem(){
+    $(".item").each(function(item){
+        $(this).removeClass('active');
+    })
+}
+
+function cleanOptionSelect(){
+    $(".item-controller.slots option").each(function(option, id){
+        if(this.index > 0){
+            this.remove();
+        }
+    })
+}
+
+function addOptionSelect(id, name){
+	//clean all options
+	var selectCntnr = $(".item-controller.slots")
+	$("<option>")
+		.attr("value", id)
+		.html(name)
+		.appendTo(selectCntnr)
+}
 
 function displayHeader(){
 	$("h1.character_name").append(character.character_name)
@@ -139,20 +123,42 @@ function displayInventory(){
 	character['inventory']['weapons'].forEach(function(item, id){
 		var cntnr = $('.list-weapons');	
 		if(item['equipped']){
-			cntnr = $('.weapon-section#'+item['slot']);
-			cntnr.attr('data-list-id', id)
-		}
-		//TODO ajouter image selon type arme
-		var weaponCntnr = $('<div>')
-			.addClass('item-name')
-			.addClass(item['rarity'])
-			.html(item['weapon_type'])
-			.appendTo(cntnr);
+			cntnr = $('.weapon-section#main_slot_'+item['slot']);
+            var weaponCntnr = $('<div>')
+                .addClass('item')
+                .addClass('weapon')
+                .addClass(item['rarity'])
+				.attr('id', item['id'])
+                .appendTo(cntnr);
 
-		$('<span>')
-			.addClass('item-brand')
-			.html(item['brand'])
-			.appendTo(weaponCntnr)
+			$('<span>')
+				.addClass('item-name')
+                .html(item['weapon_type'])
+				.appendTo(weaponCntnr)
+
+            $('<span>')
+                .addClass('item-brand')
+                .html(item['brand'])
+                .appendTo(weaponCntnr)
+		}else{
+            //TODO ajouter image selon type arme
+            weaponCntnr = $('<li>')
+				.attr('id', item['id'])
+                .addClass('item')
+                .addClass('weapon')
+                .addClass(item['rarity'])
+                .appendTo(cntnr);
+
+            $('<span>')
+                .addClass('item-name')
+                .addClass(item['rarity'])
+                .html(item['weapon_type'])
+				.appendTo(weaponCntnr)
+            $('<span>')
+                .addClass('item-brand')
+                .html(item['brand'])
+                .appendTo(weaponCntnr)
+		}
 	})
 }
 
@@ -418,4 +424,74 @@ function openTab(evt, id) {
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(id).style.display = "block";
     evt.currentTarget.className += " active";
+}
+
+//Fonction de click sur un élément type Weapon
+let clickWeapon = function(){
+    current_item_cntnr = $(this);
+    console.log(current_item_cntnr)
+    if(current_item_cntnr.hasClass('active')){
+        $(".item-controller").hide()
+        current_item_cntnr.removeClass('active');
+    }else{
+        //On enlève l'actif aux autres items
+        cleanActiveItem();
+        //On ajoute l'actif à cet item
+        current_item_cntnr.addClass('active');
+        //On montre les contrôlleurs
+        $(".item-controller").show()
+
+        //On va chercher l'item dans l'inventaire
+        var item = getItem(parseInt(current_item_cntnr.attr('id')));
+        console.log(item)
+
+        //Si l'élément est équipé, on peuple le select avec l'option (slot x sauf current) & inventaire
+        cleanOptionSelect();
+        if(item.equipped){
+            addOptionSelect('inventory-list', 'Inventaire')
+            for(var i=1; i<=character.inventory['enable_weapons_slots']; i++){
+                if(i !== item.slot){
+                    addOptionSelect('main_slot_'+i, 'Emplacement '+i)
+                }
+            }
+        }else{
+            for(var i=1; i<=character.inventory['enable_weapons_slots']; i++){
+                addOptionSelect('main_slot_'+i, 'Emplacement '+i)
+            }
+        }
+    }
+};
+//Fonction de déplacement d'un item
+let ControllerSlot = function(){
+    //On récupère l'item dans l'inventaire
+    var active_item = getItem(parseInt($(".item.active").attr('id')))
+    //On récupère la destination
+    var destination = $("select.item-controller.slots").val();
+    var slot = "slot";
+
+    console.log(destination)
+    //Si c'est un slot
+    if(destination.indexOf(slot)){
+        //On vérifie si le slot est vide.
+        if($.trim( $('#'+destination).html()).length){
+            //Si non, on déplace l'élément occupant dans l'inventaire, et on enlève son statut équipé
+            var id_occupant = $("#"+destination+" .item").attr('id')
+            var occupant = getItem(parseInt(id_occupant))
+
+            occupant.equipped = false;
+            delete occupant.slot
+        }
+        active_item.equipped = true;
+        active_item.slot = parseInt(destination.substring(10, 11))
+        $('.list-weapons').empty();
+        $('.weapon-section').empty();
+    }
+
+    //On refresh l'affichage
+	displayInventory();
+    $(".item-controller").hide()
+
+	//clean vars
+    cleanActiveItem();
+    current_item_cntnr = null;
 }

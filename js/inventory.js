@@ -3,6 +3,7 @@ class Inventory{
 		printlog('Inventory:: constructor');
 		this.max_inventory_slots = max_slots
 		this.enable_weapons_slots = enable_weapons
+		this.max_weapons_slots = 4;
 	}
 
 	unlockSlots(){
@@ -12,6 +13,8 @@ class Inventory{
 
 	unlockWeaponSlot(){
 		printlog('Inventory:: unlockWeaponSlot');
-		this.enable_weapons_slots += 1;
+		if(this.enable_weapons_slots < this.max_weapons_slots){
+			this.enable_weapons_slots += 1;
+		}
 	}
 }

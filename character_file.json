@@ -10,7 +10,7 @@
 	"current_shield": 100,
 	"max_shield": 100,
 	"max_slots": 8,
-	"enable_slots": 2,
+	"enable_slots": 3,
 	"inventory": [
 		{
 			"type": "cold_steel",
@@ -61,6 +61,21 @@
 			"recoil": 5,
 			"max_ammo": 20,
 			"current_ammo": 20,
+			"elementary": false,
+			"equipped": false
+		},
+		{
+			"type": "weapon",
+			"brand": "hyperion",
+			"rarity": "blue",
+			"weapon_type": "revolvers",
+			"damages": 15,
+			"accuracy": 70,
+			"fire_rate": 3,
+			"reloading": 1,
+			"recoil": 5,
+			"max_ammo": 2,
+			"current_ammo": 2,
 			"elementary": false,
 			"equipped": false
 		}
