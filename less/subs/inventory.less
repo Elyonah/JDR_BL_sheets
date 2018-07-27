@@ -1,0 +1,42 @@
+.inventory-slots{
+  .inventory-slots-counter{}
+  .subtitle{
+    font-family: @scnd-font;
+    color: dimgrey;
+    &:before{
+      content: '';
+      min-width: 10px;
+      height: 1px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      background-color: dimgrey;
+    }
+  }
+  .inventory-list{
+    .item{
+      .item-name{
+
+      }
+      .item-brand{
+        text-transform: uppercase;
+      }
+      &.active{
+        background-color: @yellow-hover;
+      }
+    }
+
+  }
+}
+
+.item{
+  .item-name{
+
+  }
+  .item-brand{
+    text-transform: uppercase;
+  }
+  &.active{
+    background-color: @yellow-hover;
+  }
+}

@@ -1,0 +1,42 @@
+@icon-coin-dollar: "\e93b";
+@icon-aid-kit: "\e998";
+@icon-shield: "\e9b4";
+@icon-heart: "\e9da";
+@icon-heart-broken: "\e9db";
+@icon-plus: "\ea0a";
+
+.icon-font(){
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"], [class*=" icon-"] { .icon-font(); }
+
+.icon-coin-dollar:before {
+  content: @icon-coin-dollar;
+}
+.icon-aid-kit:before {
+  content: @icon-aid-kit;
+}
+.icon-shield:before {
+  content: @icon-shield;
+}
+.icon-heart:before {
+  content: @icon-heart;
+}
+.icon-heart-broken:before {
+  content: @icon-heart-broken;
+}
+.icon-plus:before {
+  content: @icon-plus;
+}

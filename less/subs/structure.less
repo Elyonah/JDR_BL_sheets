@@ -1,0 +1,38 @@
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border-top: none;
+  .tab-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .left-section, .right-section{
+      flex-grow: 1;
+      width: 50%;
+      position: relative;
+    }
+    .left-section{
+      background-color: lightgrey;
+    }
+    .right-section{
+      background-color: darkgray;
+    }
+    .section{
+      position: relative;
+      background-color: cadetblue;
+      padding: 10px 5px;
+      margin-bottom: 10px;
+    }
+    .window{
+      background-color: darkcyan;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    .controls{
+      flex-grow: 1;
+    }
+  }
+}
