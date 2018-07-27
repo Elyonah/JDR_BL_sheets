@@ -67,14 +67,6 @@ $(document).ready(function(){
     $(".item-controller.slots").on('change', ControllerSlot)
 });
 
-
-function getItem(index){
-	var selected_item = character.inventory['weapons'].find(function(element) {
-        return element.id === index;
-    });
-	return selected_item;
-}
-
 function cleanActiveItem(){
     $(".item").each(function(item){
         $(this).removeClass('active');
@@ -352,7 +344,6 @@ function openTab(evt, id) {
 //Fonction de click sur un élément type Weapon
 var clickWeapon = function(){
     current_item_cntnr = $(this);
-    console.log(current_item_cntnr)
     if(current_item_cntnr.hasClass('active')){
         $(".item-controller").hide()
         current_item_cntnr.removeClass('active');
@@ -365,8 +356,7 @@ var clickWeapon = function(){
         $(".item-controller").show()
 
         //On va chercher l'item dans l'inventaire
-        var item = getItem(parseInt(current_item_cntnr.attr('id')));
-        console.log(item)
+        var item = character.inventory.getItem(parseInt(current_item_cntnr.attr('id')));
 
         //Si l'élément est équipé, on peuple le select avec l'option (slot x sauf current) & inventaire
         cleanOptionSelect();
@@ -387,18 +377,17 @@ var clickWeapon = function(){
 //Fonction de déplacement d'un item
 var ControllerSlot = function(){
     //On récupère l'item dans l'inventaire
-    var active_item = getItem(parseInt($(".item.active").attr('id')))
+    var active_item = character.inventory.getItem(parseInt($(".item.active").attr('id')))
     //On récupère la destination
     var destination = $("select.item-controller.slots").val();
     var slot = "main_slot_";
 
-    console.log(destination)
     //Si c'est un slot
     if(destination !== 'inventory-list'){
         //On vérifie si le slot est vide.
         if($.trim( $('#'+destination).html()).length){
             var id_occupant = $("#"+destination+" .item").attr('id')
-            var occupant = getItem(parseInt(id_occupant))
+            var occupant = character.inventory.getItem(parseInt(id_occupant))
 
 			//Si l'active_item est déjà équipé, on échange les place
 			if(active_item.equipped){
@@ -413,6 +402,8 @@ var ControllerSlot = function(){
         }
         if(!active_item.equipped){
         	active_item.equipped = true;
+        	active_item.slot = parseInt(destination.substring(10, 11))
+		}else{
         	active_item.slot = parseInt(destination.substring(10, 11))
 		}
     } else {
@@ -436,7 +427,7 @@ var ControllerSlot = function(){
 }
 
 function ControllerDrop(){
-    var active_item = getItem(parseInt($(".item.active").attr('id')))
+    var active_item = character.inventory.getItem(parseInt($(".item.active").attr('id')))
 	if(confirm('Êtes vous sûr de vouloir jeter cet item ? Attention, cette action est irréversible.')){
         dropPool.push(active_item);
         character.inventory['weapons'].forEach(function(element, id) {

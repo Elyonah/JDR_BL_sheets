@@ -38,4 +38,11 @@ class Inventory{
 		});
 		return count;
 	}
+
+	getItem(index){
+        var selected_item = character.inventory['weapons'].find(function(element) {
+            return element.id === index;
+        });
+        return selected_item;
+	}
 }

@@ -53,9 +53,7 @@ class Character{
             this.current_shield = newValue;
             if(newValue <= 0){
                 this.current_shield = 0;
-                console.log('shield is at : ', this.current_shield)
                 var rest = 0 - newValue;
-                console.log('but it remain : ', rest)
                 this.current_health -= rest;
             }
         }else{
