@@ -35,7 +35,6 @@ $(document).ready(function(){
 	var coldSteel = null;
 
 	character_json['inventory'].forEach(function(item, id){
-		
 		//Si c'est une arme
 		if(item['type'] === itemType.WEAPON){
 			var weapon = new Weapon(item['weapon_type'], item['brand'], item['rarity'],
@@ -52,13 +51,14 @@ $(document).ready(function(){
 		}
 	});
 
-	character.inventory['weapons'] = weapons_list
-	character.inventory['coldsteel'] = coldSteel
+	character.inventory['weapons'] = weapons_list;
+	character.inventory['coldsteel'] = coldSteel;
 
 	console.log(character);
 
 	displayHeader();
 	displaySheet();
+	displaySlots();
 	displayInventory();
 	/*displaySkills();*/
 
@@ -160,6 +160,17 @@ function displayInventory(){
                 .appendTo(weaponCntnr)
 		}
 	})
+}
+
+function displaySlots(){
+	var enable_slots = character.inventory['enable_weapons_slots']
+	console.log('es: ', enable_slots)
+	$('.main-weapons > .weapon-section').each(function(item, id){
+		console.log(id);
+	})
+		var slots = $(".main-weapons").children();
+		$(slots[i]).addClass('enable');
+
 }
 
 function displaySkills(){

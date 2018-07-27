@@ -24,11 +24,15 @@ Gestion des fiches de personnage du JDR Borderlands
 
 ### Panneau Inventory :
 
-- Drag & Drop Main weapons to inventory et vice versa
-https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1922434-le-drag-drop
-https://course.oc-static.com/ftp-tutos/cours/javascript/part5/chap5/ex9.html 
 - Fonction vendre => input pour montant, ajouter dans money.
 - Fonction ajouter un item dans l'inventaire, form pour stats + retirer argent si c'est un achat.
+- Fonction déplacer :
+ -> Cas fait : 
+ --> Inventaire to slot OK
+ -> TODO :
+ --> RESOUDRE BUG
+ --> Slot to inventaire (vérification nb max slot dispo)
+ --> Slot to slot (échange, même si cette option n'est pas super utile)
 
 ### Panneau Character :
 
