@@ -1,6 +1,7 @@
 class Weapon{
 	constructor(weapon_type, brand, rarity, dmg, accuracy, fire_rate, reloading, 
 		recoil, max_ammo, current_ammo, elementary, equipped, slot, critical_strike){
+		this.type = itemType.WEAPON
 		this.weapon_type = weapon_type
 		this.brand = brand
 		this.rarity = rarity
