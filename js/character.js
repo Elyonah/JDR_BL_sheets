@@ -550,4 +550,3 @@ function getBackItem(){
 }
 
 //TODO : Achat
-//TODO : récupération depuis la pool
