@@ -11,14 +11,15 @@ Gestion des fiches de personnage du JDR Borderlands
 ### Classes
 - Character.js (main class à priori)
 - Inventory.js
-- Item.js
+- Ammo
 - Skills.js
-- grenades.js
-- Mod_class.js
 
 ### Panneau Inventory :
 
 - Fonction ajouter un item dans l'inventaire, form pour stats + retirer argent si c'est un achat.
+- Fonction de tir / recharge, gestion des ammos.
+- Achat munitions (voir notes)
+- Revoir bouton (voir notes)
 
 ### Panneau Character :
 
@@ -33,4 +34,4 @@ Gestion des fiches de personnage du JDR Borderlands
 ## Points V2
 
 -> Ecran MJ qui a accès à plusieurs controles
--> Pool d'armes vendues / jetées
+-> Pool commune d'armes vendues / jetées

@@ -2,18 +2,20 @@
 Mod_class :
 Tableau qui augmente telle ou telle compétence
 
+==> Y'a-t-il bien une classe pour les mods ?
+==> Y'a-t-il bien une rareté ?
+==> Dois-je bloqué le fait de mettre un mode de classe si on est pas de la classe ?
+
+
+Munitions => Les prix sont-ils fixes ? augmentent-ils avec les niveaux ?
+=> Ça s'achète par pack (que se passe-t-il si on peut pas acheter le pack parce qu'on est presque full ?) ? On peut sélectionner combien on en veut ?
+-> Bouton : remplir munitions (achète autant de munitions que nécessaire pour remplir les stocks, dans la mesure du possible au niveau budget)
+
+KOS => Prix ?! Niveau ? (est-ce que les prix sont fixes ? est-ce Antoine qui décide du prix ?)
+
 Dégats critiques :
 toutes les armes : + 100% dégats
 sniper : + 200% dégats
-
-Level : 
-plafond = +150% à chaque nouveau level
-
-Vie :
-Plafond = +15 flat
-
-Max slots : 8 base
-plafond = +4 à chaque KOS
 
 Skills :
 Max : 5 OU 1 ==> Voir avec Antoine
