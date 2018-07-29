@@ -7,8 +7,6 @@
 	"xp": 75,
 	"money": 80,
 	"current_health": 100,
-	"current_shield": 100,
-	"max_shield": 100,
 	"max_slots": 8,
 	"enable_slots": 3,
 	"inventory": [
@@ -78,6 +76,27 @@
 			"current_ammo": 2,
 			"elementary": false,
 			"equipped": false
+		},
+		{
+			"type": "shield",
+			"brand": "anshin",
+			"rarity": "green",
+			"capacity": 110,
+			"equipped": false,
+			"current_value": 110,
+			"reloading": 10,
+			"cooldown": 3,
+			"attributes": "-10% dégâts au feu"
+		},
+		{
+			"type": "shield",
+			"rarity": "white",
+			"brand": "pangolin",
+			"capacity": 85,
+			"equipped": false,
+			"reloading": 8,
+			"cooldown": 2,
+			"attributes": ""
 		}
 	],
 	"ammo": [

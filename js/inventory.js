@@ -45,9 +45,37 @@ class Inventory{
 	}
 
 	getItem(index){
-        var selected_item = character.inventory['weapons'].find(function(element) {
+		printlog('Inventory:: getItem')
+		var all_items = character.inventory['weapons'].concat(character.inventory['shields'])
+        var selected_item = all_items.find(function(element) {
             return element.id === index;
         });
         return selected_item;
+	}
+
+    getShieldEquipped(){
+        printlog('Shied:: getShieldEquipped')
+        var shield = character.inventory['shields'].find(function(element) {
+            return element.equipped === true;
+        });
+        return (shield === undefined) ? false : shield
+    }
+
+    getCurrentShieldMax(){
+        printlog('Shied:: getCurrentShieldMax')
+        var shield = character.inventory['shields'].find(function(element) {
+            return element.equipped === true;
+        });
+        return (shield === undefined) ? 0 : shield.capacity
+	}
+
+    getCurrentShieldValue(){
+        printlog('Shied:: getCurrentShieldValue')
+
+        printlog('Shied:: getCurrentShieldMax')
+        var shield = character.inventory['shields'].find(function(element) {
+            return element.equipped === true;
+        });
+        return (shield === undefined) ? 0 : shield.current_value
 	}
 }

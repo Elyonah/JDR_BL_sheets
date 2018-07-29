@@ -15,12 +15,10 @@ class Character{
     }
 
     /*Methods*/
-    setImportedCharacter(lvl, xp, shield, max_shield, health, money){
+    setImportedCharacter(lvl, xp, health, money){
         printlog('Character:: SetImportedCharacter');
         this.current_level = lvl;
         this.current_xp = xp;
-        this.current_shield = shield;
-        this.max_shield = max_shield;
         this.current_health = health ;
         this.max_health = this.calcMaxHealth();
         this.money = money;
@@ -37,22 +35,28 @@ class Character{
         this.max_xp = this.calcMaxXP();
         this.current_xp = 0;
         this.current_level += 1;
-        this.current_health = this.max_health;
-        this.current_shield = this.max_shield;
+        this.regenHealth()
+        this.regenShield()
     }
     regenHealth(){
+        printlog('Character:: regenHealth')
         this.current_health = this.max_health;
     }
     regenShield(){
-        this.current_shield = this.max_shield;
+        printlog('Character:: regenShield')
+        var shield = this.inventory.getShieldEquipped()
+        console.log(shield)
+        if(shield){
+            shield.current_value = shield.capacity
+        }
     }
     takeHit(dmg){
         printlog("Character:: takeHit");
-        if(this.current_shield > 0){
-            var newValue = this.current_shield - dmg;
-            this.current_shield = newValue;
+        if(this.inventory.getCurrentShieldValue() > 0){
+            var newValue = this.inventory.getShieldEquipped().current_value - dmg;
+            this.inventory.getShieldEquipped().current_value = newValue;
             if(newValue <= 0){
-                this.current_shield = 0;
+                this.inventory.getShieldEquipped().current_value = 0;
                 var rest = 0 - newValue;
                 this.current_health -= rest;
             }
