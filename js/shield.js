@@ -1,5 +1,6 @@
-class Shield{
+class Shield extends Item{
     constructor(brand, capacity, rarity, equipped, reloading, cooldown, attributes){
+        super();
         this.type = itemType.SHIELD
         this.brand = brand
         this.rarity = rarity

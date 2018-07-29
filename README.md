@@ -13,6 +13,8 @@ Gestion des fiches de personnage du JDR Borderlands
 - Inventory.js
 - Item.js
 - Skills.js
+- grenades.js
+- Mod_class.js
 
 ### Panneau Inventory :
 

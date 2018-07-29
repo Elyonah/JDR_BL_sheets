@@ -3,11 +3,11 @@ var itemType = {
 	WEAPON: 'weapon',
 	COLD_STEEL: 'cold_steel',
 	SHIELD: 'shield',
-	GRENAD: 'grenad',
+	GRENADE: 'grenade',
 	MOD_CLASS: 'mod_class'
 }
 
-var Elementaries = {
+var Elements = {
 	FIRE: 'fire',
 	EXPLOSIV: 'explosive',
 	ELECTRIC: 'electric',
@@ -46,4 +46,11 @@ var weapons = {
   SHOTGUNS: 'shotguns',
   COMBAT_RIFLES: 'combat_rifles',
   SNIPER_RIFLES: 'sniper_rifles'
+}
+
+var grenadeTypes = {
+	NORMAL: 'normal',
+	LONGBOW: 'longbow',
+	PROXI: 'proxi',
+	MIRV: 'mirv'
 }

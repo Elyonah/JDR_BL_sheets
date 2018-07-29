@@ -97,6 +97,26 @@
 			"reloading": 8,
 			"cooldown": 2,
 			"attributes": ""
+		},
+		{
+			"type": "grenade",
+			"damages": 10,
+			"rarity": "blue",
+			"element": "electric",
+			"transf": false,
+			"grenade_type": "longbow",
+			"equipped": false,
+			"range": 10
+		},
+		{
+			"type" : "grenade",
+			"rarity": "green",
+			"damages": 5,
+			"element": false,
+			"transf": true,
+			"grenade_type": "normal",
+			"equipped": true,
+			"range": 5
 		}
 	],
 	"ammo": [
@@ -131,7 +151,7 @@
 			"value": 10
 		},
 		{
-			"type": "Grenad",
+			"type": "grenades",
 			"capacity_max": 3,
 			"value": 0
 		}

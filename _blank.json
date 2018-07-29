@@ -43,7 +43,7 @@
 				"empty": true,
 			},
 			{
-				"id": "grenade_mod",
+				"id": "grenadese_mod",
 				"empty": true,
 				"damages": 10,
 				"elementary": false
@@ -88,7 +88,7 @@
 			"value": 0
 		},
 		{
-			"type": "Grenad",
+			"type": "grenades",
 			"capacity_max": 3,
 			"value": 0
 		}

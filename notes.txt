@@ -3,18 +3,18 @@ Capacité bouclier: nb max
 si equipped : nombre courant
 rechargement : X/T
 délai avant rechargement : T
-attribut supplémentaire : 
+attribut supplémentaire :
 brand
 
 Cold_steel:
 damage : 
 description : 
 
-Mod_grenade :
+Mod_grenadese :
 Degats
 Element: explosive (base)
 transfu: false (soit element soit transfu) ANSHIN
-type : longbow (HYPERION) / proxi(VLADOF) / MIRV (TORGUE)
+type : longbow (HYPERION) / proxi(VLADOF) / MIRV (TORGUE) / normal (TEDIORE)
 Taille explosion: (m)
 
 Mod_class :

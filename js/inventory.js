@@ -6,9 +6,9 @@ class Inventory{
 		this.max_weapons_slots = 4;
 		this.weapons = [];
 		this.shields = [];
-		this.grenads = [];
+		this.grenades = [];
 		this.class_mods = [];
-		this.coldSteel = null;
+		this.coldsteel = null;
 	}
 
 	unlockSlots(){
@@ -46,7 +46,7 @@ class Inventory{
 
 	getItem(index){
 		printlog('Inventory:: getItem')
-		var all_items = character.inventory['weapons'].concat(character.inventory['shields'])
+		var all_items = character.inventory['weapons'].concat(character.inventory['shields'], character.inventory['grenades'])
         var selected_item = all_items.find(function(element) {
             return element.id === index;
         });
@@ -71,8 +71,6 @@ class Inventory{
 
     getCurrentShieldValue(){
         printlog('Shied:: getCurrentShieldValue')
-
-        printlog('Shied:: getCurrentShieldMax')
         var shield = character.inventory['shields'].find(function(element) {
             return element.equipped === true;
         });

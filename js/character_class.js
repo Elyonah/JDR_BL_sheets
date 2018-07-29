@@ -24,9 +24,11 @@ class Character{
         this.money = money;
     }
     calcMaxHealth(){
+        printlog("Character:: calcMaxHealth")
         return 100 + (15 * (this.current_level - 1));
     }
     calcMaxXP(){
+        printlog("Character:: calcMaxXP")
         return Math.round(100 * Math.pow(2.5, (this.current_level - 1)))
     }
     levelUp(){
