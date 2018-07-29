@@ -1,21 +1,3 @@
-Shield :
-Capacité bouclier: nb max
-si equipped : nombre courant
-rechargement : X/T
-délai avant rechargement : T
-attribut supplémentaire :
-brand
-
-Cold_steel:
-damage : 
-description : 
-
-Mod_grenadese :
-Degats
-Element: explosive (base)
-transfu: false (soit element soit transfu) ANSHIN
-type : longbow (HYPERION) / proxi(VLADOF) / MIRV (TORGUE) / normal (TEDIORE)
-Taille explosion: (m)
 
 Mod_class :
 Tableau qui augmente telle ou telle compétence

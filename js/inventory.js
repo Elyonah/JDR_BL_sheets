@@ -7,7 +7,7 @@ class Inventory{
 		this.weapons = [];
 		this.shields = [];
 		this.grenades = [];
-		this.class_mods = [];
+		this.mods_class = [];
 		this.coldsteel = null;
 	}
 
@@ -46,7 +46,8 @@ class Inventory{
 
 	getItem(index){
 		printlog('Inventory:: getItem')
-		var all_items = character.inventory['weapons'].concat(character.inventory['shields'], character.inventory['grenades'])
+		var all_items = character.inventory['weapons'].concat(character.inventory['shields'],
+			character.inventory['grenades'], character.inventory['mods_class'])
         var selected_item = all_items.find(function(element) {
             return element.id === index;
         });

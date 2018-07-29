@@ -22,7 +22,7 @@ $(document).ready(function () {
     character.inventory = new Inventory(character_json['max_slots'], character_json['enable_slots']);
 
     character_json['inventory'].forEach(function (item, id) {
-        //Si c'est une arme
+        //ARME
         if (item['type'] === itemType.WEAPON) {
             var weapon = new Weapon(item['weapon_type'], item['brand'], item['rarity'],
                 item['damages'], item['accuracy'], item['fire_rate'], item['reloading'],
@@ -32,12 +32,12 @@ $(document).ready(function () {
             character.inventory['weapons'].push(weapon)
         }
 
-        //Si c'est une arme (CAC)
+        //ARME AU CORPS-À-CORPS
         if (item['type'] === itemType.COLD_STEEL) {
             character.inventory['coldsteel'] = new ColdSteel(item['description'], item['damages']);
         }
 
-        //Si c'est un shield
+        //BOUCLIER
         if (item['type'] === itemType.SHIELD) {
             var shield = new Shield(item['brand'], item['capacity'], item['rarity'], item['equipped'], item['reloading'], item['cooldown'], item['attributes'])
             shield.id = id;
@@ -47,11 +47,18 @@ $(document).ready(function () {
             character.inventory['shields'].push(shield)
         }
 
-        //Si c'est un mode de grenade
+        //GRENADE
         if (item['type'] === itemType.GRENADE) {
             var grenade = new Grenade(item['damages'], item['equipped'], item['rarity'], item['element'], item['transf'], item['grenade_type'], item['range'])
             grenade.id = id;
             character.inventory['grenades'].push(grenade)
+        }
+
+        //MOD DE CLASS
+        if(item['type'] === itemType.MOD_CLASS) {
+            var modclass = new modClass(item['class'], item['rarity'], item['equipped'], item['bonus'])
+            modclass.id = id
+            character.inventory['mods_class'].push(modclass)
         }
     });
 
@@ -134,12 +141,15 @@ function displaySheet() {
 
 function displayInventory() {
     printlog('displayInventory')
-    $('.list-weapons, .list-shields, .list-grenades').empty();
+
+    //Suppression du contenu des listes
+    $('.list-weapons, .list-shields, .list-grenades, .list-mods').empty();
     $('.weapon-section').empty();
+    //Rafraîchissement des valeurs
     refresh('current_slots', character.inventory.countAllInventoryItems())
     refresh("max_slots", character.inventory['max_inventory_slots'])
 
-    /*WEAPONS*/
+    /*ARMES*/
     character['inventory']['weapons'].forEach(function (item, id) {
         var cntnr = $('.list-weapons');
         var cntnrType = '<li>'
@@ -169,7 +179,7 @@ function displayInventory() {
     })
     $(".item.weapon").on('click', clickItem)
 
-    /*SHIELDS*/
+    /*BOUCLIERS*/
     character['inventory']['shields'].forEach(function (item, id) {
         var cntnr = $('.list-shields');
         var cntnrType = '<li>'
@@ -223,6 +233,33 @@ function displayInventory() {
             .appendTo(grenadeCntnr)
     })
     $(".item.grenade").on("click", clickItem)
+
+    /*MOD DE CLASSE*/
+    character['inventory']['mods_class'].forEach(function (item, id) {
+        var cntnr = $('.list-mods');
+        var cntnrType = '<li>';
+        console.log(item)
+        if (item['equipped']) {
+            cntnr = $('.weapon-section.mod-class-cntnr')
+            cntnrType = '<div>';
+        }
+        //Ajouter image grenade
+        var modCntnr = $(cntnrType)
+            .addClass('item')
+            .addClass('mod_class')
+            .addClass(item['rarity'])
+            .attr('id', item['id'])
+            .appendTo(cntnr)
+        $('<span>')
+            .addClass('item-name')
+            .html("Mode de classe")
+            .appendTo(modCntnr)
+        $('<span>')
+            .addClass('item-class')
+            .html(item['class'])
+            .appendTo(modCntnr)
+    })
+    $(".item.mod_class").on("click", clickItem)
 }
 
 function displaySlots() {
@@ -241,15 +278,24 @@ function displayPool() {
     if (dropPool.length > 0) {
         $(".pool-controller.empty").show();
         dropPool.forEach(function (item, id) {
-            type = item['type']
+            var content = item['type']
             if (item.type === itemType.WEAPON) {
-                type = item['weapon_type']
+                content = item['weapon_type'] + ' ' + item['brand']
+            }
+            if (item.type === itemType.SHIELD){
+                content = 'Bouclier ' + item['brand']
+            }
+            if (item.type === itemType.GRENADE){
+                content = item['grenade_type'] + ' ' + item['brand']
+            }
+            if (item.type === itemType.MOD_CLASS){
+                content = 'Mod de classe ' + item['class']
             }
             $('<li>')
                 .addClass('item')
                 .addClass(item['rarity'])
                 .attr('id', item['id'])
-                .html(type + ' ' + item['brand'])
+                .html(content)
                 .appendTo($('ul.drop-pool'));
         })
         $("ul.drop-pool li").on('click', ControllerPool);
@@ -442,6 +488,9 @@ function getBackItem() {
                 if (current_item[0].type === itemType.GRENADE) {
                     character.inventory['grenades'].push(current_item[0])
                 }
+                if (current_item[0].type === itemType.MOD_CLASS) {
+                    character.inventory['mods_class'].push(current_item[0])
+                }
                 dropPool.splice(current_item_id, 1);
             })
 
@@ -530,6 +579,9 @@ var clickItem = function () {
             if (item.type === itemType.GRENADE) {
                 addOptionSelect('grenade_slot', 'Emplacement de mode de grenade')
             }
+            if (item.type === itemType.MOD_CLASS) {
+                addOptionSelect('mod_slot', 'Emplacement de mode de classe')
+            }
         }
     } else if (active_items > 1) {
         $(".item-controller.slots").hide();
@@ -541,15 +593,10 @@ var clickItem = function () {
 //Fonction de déplacement d'un item
 var ControllerSlot = function () {
     printlog('ControllerSlot')
-    //TODO : Class mod
-    //TODO : grenades
     //On récupère l'item dans l'inventaire
     var active_item = character.inventory.getItem(parseInt($("#inventory .item.active").attr('id')))
-    console.log(active_item)
     //On récupère la destination
     var destination = $("select.item-controller.slots").val();
-    console.log(destination)
-    var slot = "main_slot_";
 
     //Si la destination est un slot
     if (destination !== 'inventory-list') {
@@ -557,8 +604,7 @@ var ControllerSlot = function () {
         if ($.trim($('#' + destination).html()).length) {
             var id_occupant = $("#" + destination + " .item").attr('id')
             var occupant = character.inventory.getItem(parseInt(id_occupant))
-            console.log("occpant ", occupant)
-            //Si l'active_item est déjà équipé (weapon), on échange les place
+            //Si l'active_item est déjà équipé (uniquement pour weapon), on échange les places
             if (active_item.type === itemType.WEAPON && active_item.equipped) {
                 var slot = occupant['slot'];
                 occupant.slot = active_item.slot
@@ -589,7 +635,6 @@ var ControllerSlot = function () {
             alert('Vous n\'avez plus de place dans votre inventaire. Rendez-vous au distributeur le plus proche pour vendre des items ou jeter un item.')
         } else {
             active_item.equipped = false;
-            console.log(active_item)
             if (active_item.type === itemType.WEAPON)
                 delete active_item.slot
             if (active_item.type === itemType.SHIELD)
@@ -625,15 +670,25 @@ function ControllerSale() {
         $("#inventory .item.active").each(function () {
             var item = character.inventory.getItem(parseInt($(this).attr('id')))
             item.equipped = false;
-            var type = item['type']
+            var promptContent = '';
             if (item.type === itemType.WEAPON) {
                 delete item.slot;
-                type = item['weapon_type']
+                promptContent = item['weapon_type'] + ' ' + item.brand
             }
-            if (item.type === itemType.SHIELD)
+            if (item.type === itemType.SHIELD){
                 delete item.current_value
+                promptContent = item['type'] + ' ' + item.brand
+            }
+            if (item.type === itemType.GRENADE){
+                promptContent = item['grenade_type'] + ' ' + item.brand
+            }
+            if (item.type === itemType.MOD_CLASS){
+                type = item['class']
+                promptContent = 'Mode de classe ' + item['class']
+            }
 
-            var price = Number(prompt("Veuillez entrer la valeur de revente pour l'arme : " + type + ' ' + item.brand, ""));
+
+            var price = Number(prompt("Veuillez entrer la valeur de revente pour l'item : " + promptContent, ""));
             if (price !== '' && !isNaN(price) && price !== 0) {
                 character['money'] += price;
                 item.value = price;
@@ -656,6 +711,12 @@ function ControllerSale() {
                         character.inventory['grenades'].splice(id, 1)
                     }
                 });
+                character.inventory['mods_class'].forEach(function (element, id){
+                    if (item === element) {
+                        cleanActiveItem();
+                        character.inventory['mods_class'].splice(id, 1)
+                    }
+                })
             } else {
                 alert('Merci d\'entrer une valeur numérique.')
             }
@@ -694,6 +755,12 @@ function ControllerDrop() {
                 if (item === element){
                     cleanActiveItem();
                     character.inventory['grenades'].splice(id, 1)
+                }
+            })
+            character.inventory['mods_class'].forEach(function (element, id){
+                if (item === element){
+                    cleanActiveItem();
+                    character.inventory['mods_class'].splice(id, 1)
                 }
             })
         })
