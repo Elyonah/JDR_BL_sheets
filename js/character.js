@@ -553,7 +553,6 @@ var ControllerSlot = function () {
 
     //Si la destination est un slot
     if (destination !== 'inventory-list') {
-        console.log('here')
         //Si le slot n'est pas vide
         if ($.trim($('#' + destination).html()).length) {
             var id_occupant = $("#" + destination + " .item").attr('id')
