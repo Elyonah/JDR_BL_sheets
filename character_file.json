@@ -1,7 +1,7 @@
 {
 	"player_name": "Estelle",
 	"character_name": "Elyonah",
-	"class": "Sniper",
+	"class": "sniper",
 	"gender": "f",
 	"level": 1,
 	"xp": 75,
@@ -122,7 +122,7 @@
 			"type": "mod_class",
 			"rarity": "green",
 			"equipped": false,
-			"class": "sniper",
+			"class": "bruiser",
 			"bonus": [
 				"+10 % à la compétence 'Lorem'",
 				"+15 dégâts à la compétence 'Ipsum'"
@@ -141,32 +141,32 @@
 	],
 	"ammo": [
 		{
-			"type": "Repeater pistol",
+			"type": "repeater_pistol",
 			"capacity_max": 200,
 			"value": 0
 		},
 		{
-			"type": "Revolvers",
+			"type": "revolver",
 			"capacity_max": 60,
 			"value": 0
 		}, 
 		{
-			"type": "SMG",
+			"type": "smg",
 			"capacity_max": 360,
 			"value": 75
 		},
 		{
-			"type": "Shotguns",
+			"type": "shotgun",
 			"capacity_max": 80,
 			"value": 0
 		},
 		{
-			"type": "Combat rifles",
+			"type": "combat_rifles",
 			"capacity_max": 280,
 			"value": 0
 		},
 		{
-			"type": "Sniper rifles",
+			"type": "sniper_rifles",
 			"capacity_max": 48,
 			"value": 10
 		},

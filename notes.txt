@@ -2,16 +2,18 @@
 Mod_class :
 Tableau qui augmente telle ou telle compétence
 
-==> Y'a-t-il bien une classe pour les mods ?
-==> Y'a-t-il bien une rareté ?
-==> Dois-je bloqué le fait de mettre un mode de classe si on est pas de la classe ?
+==> Y'a-t-il bien une classe pour les mods ? Oui
+==> Y'a-t-il bien une rareté ? Oui
+==> Dois-je bloqué le fait de mettre un mode de classe si on est pas de la classe ? Oui
 
 
 Munitions => Les prix sont-ils fixes ? augmentent-ils avec les niveaux ?
-=> Ça s'achète par pack (que se passe-t-il si on peut pas acheter le pack parce qu'on est presque full ?) ? On peut sélectionner combien on en veut ?
+=> Ça s'achète par pack (que se passe-t-il si on peut pas acheter le pack parce qu'on est presque full ?) ?
+=> Les muns s'achetent par pack fixés par type d'armes.
 -> Bouton : remplir munitions (achète autant de munitions que nécessaire pour remplir les stocks, dans la mesure du possible au niveau budget)
 
 KOS => Prix ?! Niveau ? (est-ce que les prix sont fixes ? est-ce Antoine qui décide du prix ?)
+==> Niveau, prix fixé à l'achat par MJ
 
 Dégats critiques :
 toutes les armes : + 100% dégats
@@ -20,3 +22,8 @@ sniper : + 200% dégats
 Skills :
 Max : 5 OU 1 ==> Voir avec Antoine
 Compétence d'action => champs à voir selon personne.
+
+Boutique =>
+Distributeur mun
+Distributeur arme ?
+Distributeur soin + shield ? (avec que des soins instantanés ?)

@@ -11,15 +11,16 @@
   crossorigin="anonymous"></script>
   <script src="js/utils.js"></script>
   <script src="js/enums.js"></script>
-  <script src="js/character_class.js"></script>
+  <script src="js/character.js"></script>
   <script src="js/inventory.js"></script>
   <script src="js/item.js"></script>
+  <script src="js/ammo.js"></script>
   <script src="js/weapon.js"></script>
   <script src="js/shield.js"></script>
   <script src="js/grenade.js"></script>
   <script src="js/mod_class.js"></script>
   <script src="js/coldSteel.js"></script>
-  <script src="js/character.js"></script>
+  <script src="js/controller.js"></script>
 </head>
 <body>
 
@@ -133,26 +134,70 @@
               </div>
             </div>
           </div>
+          <div class="section">
+            <div class="title">Munitions</div>
+            <ul class="ammo-list">
+              <li id="ammo-repeater_pistol">
+                <img src="images/repeater-pistol.png" alt="ammo repeater_pistol"/>
+                <span class="current"></span>
+                <span class="max"></span>
+              </li>
+              <li id="ammo-revolver">
+                <img src="images/revolver.png" alt="ammo revolver"/>
+                <span class="current"></span>
+                <span class="max"></span>
+              </li>
+              <li id="ammo-smg">
+                <img src="images/smg.png" alt="ammo smg"/>
+                <span class="current"></span>
+                <span class="max"></span>
+              </li>
+              <li id="ammo-shotgun">
+                <img src="images/shotgun.png" alt="ammo shotgun"/>
+                <span class="current"></span>
+                <span class="max"></span>
+              </li>
+              <li id="ammo-combat_rifles">
+                <img src="images/combat-rifles.png" alt="ammo combat-rifles"/>
+                <span class="current"></span>
+                <span class="max"></span>
+              </li>
+              <li id="ammo-sniper_rifles">
+                <img src="images/sniper-rifles.png" alt="ammo sniper-rifles"/>
+                <span class="current"></span>
+                <span class="max"></span>
+              </li>
+              <li id="ammo-grenades">
+                <img src="images/grenades.png" alt="ammo grenades"/>
+                <span class="current"></span>
+                <span class="max"></span>
+              </li>
+            </ul>
+          </div>
         </div>
         <div class="right-section">
           <div class="section">
-            <div class="title">Equipped</div>
-            <div class="main-weapons">
-              <div class="weapon-section main-weapon" id="main_slot_1">
+            <div class="title">Équipés</div>
+            <div class="hand-content">
+              <div class="main-weapons">
+                <div class="weapon-section main-weapon" id="main_slot_1">
+                </div>
+                <div class="weapon-section secondary-weapon" id="main_slot_2">
+                </div>
+                <div class="weapon-section third-weapon" id="main_slot_3">
+                </div>
+                <div class="weapon-section fourth-weapon" id="main_slot_4">
+                </div>
               </div>
-              <div class="weapon-section secondary-weapon" id="main_slot_2">
-              </div>
-              <div class="weapon-section third-weapon" id="main_slot_3">
-              </div>
-              <div class="weapon-section fourth-weapon" id="main_slot_4">
-              </div>
-            </div>
-            <div class="other-stuff">
-              <div class="weapon-section shield-cntnr" id="shield_slot">
-              </div>
-              <div class="weapon-section grenade-cntnr" id="grenade_slot">
-              </div>
-              <div class="weapon-section mod-class-cntnr" id="mod_slot">
+              <div class="other-stuff">
+                <div class="weapon-section cold-steel-cntnr" id="cold_steel_slot">
+                </div>
+                <div class="weapon-section shield-cntnr" id="shield_slot">
+                </div>
+                <div class="weapon-section grenade-cntnr" id="grenade_slot">
+                </div>
+                <div class="weapon-section mod-class-cntnr" id="mod_slot">
+                </div>
               </div>
             </div>
           </div>
@@ -167,30 +212,83 @@
         </div>
         <div class="controls">
           <h2>Barre de contrôle : </h2>
-          <button class="item-controller sell" onClick="ControllerSale()">Vendre cet item</button>
+          <button class="item-controller sell" hidden onClick="ControllerSale()">Vendre cet item</button>
           <button class="item-controller drop" onClick="ControllerDrop()">Jeter cette arme</button>
           <select class="item-controller slots">
             <option value="" selected>Déplacer cet item...</option>
           </select>
           <button class="slot-controller add" onClick="UnlockSlot()">Débloquer un slot</button>
-          <button class="slot-controller addMax" onClick="UnlockInventorySlots()">Unlock KOS</button>
+          <button class="slot-controller addMax" hidden onClick="UnlockInventorySlots()">Unlock KOS</button>
         </div>
       </div>
       <div id="skills" class="tabcontent">
       </div>
     </div>
-    <div class="main-hud">
+
+    <div class="hud">
+        <h3>Controllers</h3>
+        <div class="controllers">
+            <input type="number" id="main_controller">
+            <button class="controller" onClick="regenHealth()">Régénerer vie</button>
+            <button class="controller" onClick="regenShield()">Régénerer bouclier</button>
+            <button class="controller" onClick="TakeHit()">Se prendre un coup</button>
+            <button class="controller" onClick="gainXP()">Ajouter de l'xp</button>
+            <button class="controller" hidden="hidden" onClick="correctXP()">Enlever de l'xp</button>
+        </div>
       <h2>Main HUD</h2>
-      <h3>Controllers</h3>
-      <div class="controllers">
-        <input type="number" id="main_controller">
-        <button class="controller" onClick="regenHealth()">Régénerer vie</button>
-        <button class="controller" onClick="regenShield()">Régénerer bouclier</button>
-        <button class="controller" onClick="TakeHit()">Se prendre un coup</button>
-        <button class="controller" onClick="gainXP()">Ajouter de l'xp</button>
-        <button class="controller" hidden="hidden" onClick="correctXP()">Enlever de l'xp</button>
-        <!-- recharger -->
-      </div>
+      <h3>
+         À afficher :
+          <ul>
+              <li>Barre de vie</li>
+              <li>Barre de shield</li>
+              <li>Barre d'XP</li>
+              <li>Weapon en main</li>
+              <li>Ammo weapon en main</li>
+              <li>Grenades disponibles</li>
+          </ul>
+          <div class="main-hud">
+              <div class="hud-part health-shield">
+                  <div class="shield">
+                      <i class="icon-shield"></i>
+                      <div class="shield-bar">
+                          <span class="current_shield"></span> / <span class="max_shield"></span>
+                          <span class="current_shield_cntnr"></span>
+                      </div>
+                  </div>
+                  <div class="health">
+                      <i class="icon-plus"></i>
+                      <div class="health-bar">
+                          <span class="current_health"></span> / <span class="max_health"></span>
+                          <span class="current_health_cntnr"></span>
+                      </div>
+                  </div>
+              </div>
+              <div class="hud-part xp">
+                  <div class="level">
+                      <label for="level">Level</label>
+                      <div class="level-bar">
+                          <span class="current_level"></span>
+                      </div>
+                  </div>
+                  <div class="xp">
+                      <label for="xp">XP</label>
+                      <div class="xp-header">
+                          <span class="current_xp"></span> / <span class="max_xp"></span>
+                      </div>
+                      <div class="xp_bar"></div>
+                  </div>
+              </div>
+              <div class="hud-part weapons">
+                  <div class="grenade-ammo">
+                      <img src="images/grenades.png"/>
+                  </div>
+                  <div class="weapon-ammo">
+                      <div class="bar"></div>
+                      <img src="images/sniper-rifles.png"/>
+                  </div>
+              </div>
+          </div>
+      </h3>
     </div>
     <div class="drop-pool-cntnr">
       <ul class="drop-pool"></ul>
