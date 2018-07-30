@@ -8,5 +8,25 @@
   justify-content: space-between;
   .hud-part{
     width: 33vw;
+    &.weapons{
+      .grenade-ammo{
+        .grenades{
+          li{
+            display: inline-block;
+            &:not(:last-child){
+              margin-right: 2px;
+            }
+            i{
+              color: #4b4b4b;
+            }
+            &.empty{
+              i{
+                opacity: .5;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -232,9 +232,12 @@
             <button class="controller" onClick="regenHealth()">Régénerer vie</button>
             <button class="controller" onClick="regenShield()">Régénerer bouclier</button>
             <button class="controller" onClick="TakeHit()">Se prendre un coup</button>
-            <button class="controller" onClick="gainXP()">Ajouter de l'xp</button>
-            <button class="controller" hidden="hidden" onClick="correctXP()">Enlever de l'xp</button>
+            <button class="controller" onClick="gainXP()">Gain XP</button>
+            <button class="controller" hidden="hidden" onClick="correctXP()">Correction XP</button>
             <button class="controller shoot" onClick="Shoot()">Tirer !</button>
+            <select id="main-weapon" name="main_weapon">
+                <option selected>Sélectionnez votre arme en main</option>
+            </select>
         </div>
         <div class="main-hud">
             <div class="hud-part health-shield">
@@ -255,26 +258,22 @@
             </div>
             <div class="hud-part xp">
                 <div class="level">
-                    <label for="level">Level</label>
-                    <div class="level-bar">
-                        <span class="current_level"></span>
-                    </div>
+                    <span class="class"></span> NIVEAU <span class="current_level"></span>
                 </div>
                 <div class="xp">
-                    <label for="xp">XP</label>
-                    <div class="xp-header">
-                        <span class="current_xp"></span> / <span class="max_xp"></span>
-                    </div>
                     <div class="xp_bar"></div>
                 </div>
             </div>
             <div class="hud-part weapons">
                 <div class="grenade-ammo">
+                    <ul class="grenades"></ul>
                     <img src="images/grenades.png"/>
                 </div>
                 <div class="weapon-ammo">
-                    <div class="bar"></div>
-                    <img src="images/sniper-rifles.png"/>
+                    <div class="bar">
+                        <span class="value"></span> / <span class="max"></span>
+                    </div>
+                    <img src=""/>
                 </div>
             </div>
         </div>

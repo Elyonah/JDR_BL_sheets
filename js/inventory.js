@@ -25,18 +25,19 @@ class Inventory{
 
 	countAllInventoryItems(){
 		printlog('Inventory:: countAllInventoryItems')
-		return this.countUnequippedWeapons()
+		return this.countUnequippedItems()
 	}
 
 	countAvailablesSlots(){
 		printlog('Inventory:: countAvailablesSlots')
-		return this.max_inventory_slots - this.countUnequippedWeapons()
+		return this.max_inventory_slots - this.countUnequippedItems()
 	}
 
-	countUnequippedWeapons(){
-		printlog('Inventory:: countUnequippedWeapons')
+	countUnequippedItems(){
+		printlog('Inventory:: countUnequippedItems')
 		var count = 0;
-		this.weapons.forEach(function(item){
+		var stuff = this.weapons.concat(this.shields, this.grenades, this.mods_class)
+		stuff.forEach(function(item){
 			if(!item.equipped){
 				count += 1;
 			}
@@ -46,8 +47,7 @@ class Inventory{
 
 	getItem(index){
 		printlog('Inventory:: getItem')
-		var all_items = character.inventory['weapons'].concat(character.inventory['shields'],
-			character.inventory['grenades'], character.inventory['mods_class'])
+		var all_items = this.weapons.concat(this.shields, this.grenades, this.mods_class)
         var selected_item = all_items.find(function(element) {
             return element.id === index;
         });
@@ -55,7 +55,7 @@ class Inventory{
 	}
 
     getShieldEquipped(){
-        printlog('Shied:: getShieldEquipped')
+        printlog('Inventory:: getShieldEquipped')
         var shield = character.inventory['shields'].find(function(element) {
             return element.equipped === true;
         });
@@ -63,7 +63,7 @@ class Inventory{
     }
 
     getCurrentShieldMax(){
-        printlog('Shied:: getCurrentShieldMax')
+        printlog('Inventory:: getCurrentShieldMax')
         var shield = character.inventory['shields'].find(function(element) {
             return element.equipped === true;
         });
@@ -71,10 +71,31 @@ class Inventory{
 	}
 
     getCurrentShieldValue(){
-        printlog('Shied:: getCurrentShieldValue')
+        printlog('Inventory:: getCurrentShieldValue')
         var shield = character.inventory['shields'].find(function(element) {
             return element.equipped === true;
         });
         return (shield === undefined) ? 0 : shield.current_value
+	}
+
+	getEquippedItems(){
+		printlog('Inventory:: getEquippedItems')
+		var equipped = [];
+		var allStuff = this.weapons.concat(this.shields, this.grenades, this.mods_class)
+		allStuff.forEach(function(item){
+			if(element.equipped)
+				equipped.push(item)
+		})
+		return equipped
+	}
+
+	getEquippedWeapons(){
+		printlog('Inventory:: getEquippedWeapons')
+		var equipped = [];
+		this.weapons.forEach(function(item){
+			if(item.equipped)
+				equipped.push(item)
+		})
+		return equipped
 	}
 }

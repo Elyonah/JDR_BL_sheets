@@ -1,5 +1,6 @@
 var character = null;
 var current_item_cntnr = null;
+var current_weapon = null;
 var dropPool = [];
 
 $(document).ready(function () {
@@ -79,12 +80,14 @@ $(document).ready(function () {
     displaySlots();
     displayInventory();
     displayAmmo();
+    displayHUD();
     /*displaySkills();*/
 
     $(".item-controller").hide()
     $(".pool-controller").hide()
     $(".item-controller.slots").on('change', ControllerSlot)
     $("ul.drop-pool li").on('click', ControllerPool);
+    $("#main-weapon").on('change', ControllerMainWeapon)
 });
 
 function cleanActiveItem() {
@@ -108,6 +111,16 @@ function addOptionSelect(id, name) {
     //clean all options
     var selectCntnr = $(".item-controller.slots")
     $("<option>")
+        .attr("value", id)
+        .html(name)
+        .appendTo(selectCntnr)
+}
+
+function addWeaponOptionSelect(id, name){
+    printlog('addWeaponOptionSelect')
+    //clean all options
+    var selectCntnr = $("#main-weapon")
+    $('<option>')
         .attr("value", id)
         .html(name)
         .appendTo(selectCntnr)
@@ -286,6 +299,8 @@ function displayInventory() {
         .addClass('item-name')
         .html(character.inventory['coldsteel']['description'])
         .appendTo(CSCntnr)
+
+    selectActualWeapon();
 }
 
 function displayAmmo(){
@@ -338,6 +353,43 @@ function displayPool() {
     }
     else {
         $(".pool-controller").hide();
+    }
+}
+
+function displayHUD(){
+    var ammo_grenades = character.ammo.filter(function(item){
+        return item.type === 'grenades'
+    });
+
+    var current = ammo_grenades[0].value
+    var max = ammo_grenades[0].max
+
+    for(var i = 1; i < max + 1; i++){
+        var single_grenad =  $('<li>');
+        if(i <= current){
+            single_grenad.addClass('full')
+        }else{
+            single_grenad.addClass('empty')
+        }
+
+        //TODO: Icon grenade here
+        $('<i>')
+            .addClass('icon-plus')
+            .appendTo(single_grenad)
+
+        single_grenad.appendTo($(".main-hud .hud-part.weapons .grenade-ammo .grenades"))
+    }
+
+}
+
+function selectActualWeapon(){
+    var equipped = character.inventory.getEquippedWeapons();
+    if(equipped.length !== 0){
+        equipped.forEach(function(item){
+            addWeaponOptionSelect('main-weapon-'+item.id, item.weapon_type + ' ' + item.brand)
+        })
+    }else{
+        addWeaponOptionSelect('Aucune arme d\'équipée', 'none')
     }
 }
 
@@ -703,6 +755,21 @@ var ControllerPool = function () {
     } else {
         $(".pool-controller.back").hide();
     }
+}
+//Fonction de gestion de l'arme en main
+var ControllerMainWeapon = function (){
+    printlog('ControllerPool')
+    var val = $(this).val();
+
+    current_weapon = character.inventory.getItem(parseInt($(this).val().substr(12,13)))
+
+    $(".main-hud .hud-part.weapons .weapon-ammo img")
+        .attr('src', 'images/'+current_weapon.weapon_type.replace('_', '-')+".png")
+
+    $(".main-hud .hud-part.weapons .weapon-ammo span.value")
+        .html(current_weapon.current_ammo)
+    $(".main-hud .hud-part.weapons .weapon-ammo span.max")
+        .html(current_weapon.max_ammo)
 }
 
 function ControllerSale() {
