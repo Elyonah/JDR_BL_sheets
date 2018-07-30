@@ -468,6 +468,10 @@ function correctLevel() {
     resetControllerInput();
 }
 
+function Shoot(){
+    printlog('Shoot')
+}
+
 /*Inventory functions*/
 
 function UnlockSlot() {
