@@ -45,6 +45,7 @@
 			"current_ammo": 20,
 			"elementary": false,
 			"equipped": true,
+			"actual": true,
 			"slot": 2
 		},
 		{

@@ -30,6 +30,8 @@ $(document).ready(function () {
                 item['recoil'], item['max_ammo'], item['current_ammo'], item['elementary'],
                 item['equipped'], item['slot'], item['critical_strike']);
             weapon.id = id
+            if(item['equipped'] && item['actual'])
+                weapon.actual = true
             character.inventory['weapons'].push(weapon)
         }
 
@@ -88,6 +90,8 @@ $(document).ready(function () {
     $(".item-controller.slots").on('change', ControllerSlot)
     $("ul.drop-pool li").on('click', ControllerPool);
     $("#main-weapon").on('change', ControllerMainWeapon)
+    //On check au début
+    $("#main-weapon").trigger('change')
 });
 
 function cleanActiveItem() {
@@ -116,14 +120,18 @@ function addOptionSelect(id, name) {
         .appendTo(selectCntnr)
 }
 
-function addWeaponOptionSelect(id, name){
+function addWeaponOptionSelect(id, name, actual){
     printlog('addWeaponOptionSelect')
     //clean all options
     var selectCntnr = $("#main-weapon")
-    $('<option>')
+    var option = $('<option>')
         .attr("value", id)
         .html(name)
-        .appendTo(selectCntnr)
+
+    if(actual)
+        option.attr('selected', 'selected')
+
+    option.appendTo(selectCntnr)
 }
 
 function resetControllerInput() {
@@ -379,17 +387,22 @@ function displayHUD(){
 
         single_grenad.appendTo($(".main-hud .hud-part.weapons .grenade-ammo .grenades"))
     }
-
 }
 
 function selectActualWeapon(){
+    $("#main-weapon option").each(function (option, id) {
+        if (this.index > 0) {
+            this.remove();
+        }
+    })
     var equipped = character.inventory.getEquippedWeapons();
+    console.log(equipped)
     if(equipped.length !== 0){
         equipped.forEach(function(item){
-            addWeaponOptionSelect('main-weapon-'+item.id, item.weapon_type + ' ' + item.brand)
+            addWeaponOptionSelect('main-weapon-'+item.id, item.weapon_type + ' ' + item.brand, !!(item.actual))
         })
     }else{
-        addWeaponOptionSelect('Aucune arme d\'équipée', 'none')
+        addWeaponOptionSelect('none', 'Aucune arme d\'équipée', true)
     }
 }
 
@@ -756,22 +769,37 @@ var ControllerPool = function () {
         $(".pool-controller.back").hide();
     }
 }
+
+//TODO: Revoir
 //Fonction de gestion de l'arme en main
 var ControllerMainWeapon = function (){
     printlog('ControllerPool')
     var val = $(this).val();
 
-    current_weapon = character.inventory.getItem(parseInt($(this).val().substr(12,13)))
+    if(val !== 'none'){
+        current_weapon = character.inventory.getItem(parseInt($(this).val().substr(12,13)))
 
-    $(".main-hud .hud-part.weapons .weapon-ammo img")
-        .attr('src', 'images/'+current_weapon.weapon_type.replace('_', '-')+".png")
+        $(".main-hud .hud-part.weapons .weapon-ammo img")
+            .attr('src', 'images/'+current_weapon.weapon_type.replace('_', '-')+".png")
 
-    $(".main-hud .hud-part.weapons .weapon-ammo span.value")
-        .html(current_weapon.current_ammo)
-    $(".main-hud .hud-part.weapons .weapon-ammo span.max")
-        .html(current_weapon.max_ammo)
+        $(".main-hud .hud-part.weapons .weapon-ammo span.value")
+            .html(current_weapon.current_ammo)
+        $(".main-hud .hud-part.weapons .weapon-ammo span.max")
+            .html(current_weapon.max_ammo)
+    }else{
+        $(".main-hud .hud-part.weapons .weapon-ammo img")
+            .attr('src', '')
+
+        $(".main-hud .hud-part.weapons .weapon-ammo span.value")
+            .html(0)
+        $(".main-hud .hud-part.weapons .weapon-ammo span.max")
+            .html(0)
+    }
+
 }
 
+
+//TODO: Ne pas permettre de vendre / jeter / déplacer dans l'inventaire la seule arme que l'on a d'équipée !
 function ControllerSale() {
     printlog('ControllerSale')
     if (confirm('Êtes vous sûr de vouloir vendre cet(s) item(s) ? Attention, cette action est irréversible.')) {
@@ -780,6 +808,10 @@ function ControllerSale() {
             item.equipped = false;
             var promptContent = '';
             if (item.type === itemType.WEAPON) {
+                if(item.actual) {
+                    $("#main-weapon").trigger('change')
+                    delete item.actual
+                }
                 delete item.slot;
                 promptContent = item['weapon_type'] + ' ' + item.brand
             }
@@ -842,8 +874,13 @@ function ControllerDrop() {
             var item = character.inventory.getItem(parseInt($(this).attr('id')))
             item.value = 0;
             item.equipped = false;
-            if (item.type === itemType.WEAPON)
+            if (item.type === itemType.WEAPON) {
                 delete item.slot;
+                if (item.actual) {
+                    $("#main-weapon").trigger('change')
+                    delete item.actual
+                }
+            }
             if (item.type === itemType.SHIELD)
                 delete item.current_value
             dropPool.push(item);
