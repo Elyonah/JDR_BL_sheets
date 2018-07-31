@@ -83,7 +83,7 @@ class Inventory{
 		var equipped = [];
 		var allStuff = this.weapons.concat(this.shields, this.grenades, this.mods_class)
 		allStuff.forEach(function(item){
-			if(element.equipped)
+			if(item.equipped)
 				equipped.push(item)
 		})
 		return equipped

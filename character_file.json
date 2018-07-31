@@ -19,7 +19,7 @@
 			"type": "weapon",
 			"brand": "dahl",
 			"rarity": "grey",
-			"weapon_type": "sniper_rifles",
+			"weapon_type": "sniper_rifle",
 			"damages": 15,
 			"accuracy": 70,
 			"fire_rate": 3,
@@ -67,7 +67,7 @@
 			"type": "weapon",
 			"brand": "hyperion",
 			"rarity": "blue",
-			"weapon_type": "revolvers",
+			"weapon_type": "revolver",
 			"damages": 15,
 			"accuracy": 70,
 			"fire_rate": 3,
@@ -162,17 +162,17 @@
 			"value": 0
 		},
 		{
-			"type": "combat_rifles",
+			"type": "combat_rifle",
 			"capacity_max": 280,
 			"value": 0
 		},
 		{
-			"type": "sniper_rifles",
+			"type": "sniper_rifle",
 			"capacity_max": 48,
 			"value": 10
 		},
 		{
-			"type": "grenades",
+			"type": "grenade",
 			"capacity_max": 3,
 			"value": 0
 		}

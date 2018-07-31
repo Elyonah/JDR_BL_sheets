@@ -41,11 +41,11 @@ var rarity = {
 
 var weapons = {
   REPEATER_PISTOL: 'repeater_pistol',
-  REVOLVERS: 'revolvers',
+  REVOLVERS: 'revolver',
   SMG: 'smg',
-  SHOTGUNS: 'shotguns',
-  COMBAT_RIFLES: 'combat_rifles',
-  SNIPER_RIFLES: 'sniper_rifles'
+  SHOTGUNS: 'shotgun',
+  COMBAT_RIFLES: 'combat_rifle',
+  SNIPER_RIFLES: 'sniper_rifle'
 }
 
 var grenadeTypes = {

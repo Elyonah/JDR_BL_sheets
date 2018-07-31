@@ -366,11 +366,12 @@ function displayPool() {
 
 function displayHUD(){
     var ammo_grenades = character.ammo.filter(function(item){
-        return item.type === 'grenades'
+        return item.type === 'grenade'
     });
 
     var current = ammo_grenades[0].value
     var max = ammo_grenades[0].max
+    $(".main-hud .hud-part.weapons .grenade-ammo .grenade").empty()
 
     for(var i = 1; i < max + 1; i++){
         var single_grenad =  $('<li>');
@@ -385,7 +386,7 @@ function displayHUD(){
             .addClass('icon-plus')
             .appendTo(single_grenad)
 
-        single_grenad.appendTo($(".main-hud .hud-part.weapons .grenade-ammo .grenades"))
+        single_grenad.appendTo($(".main-hud .hud-part.weapons .grenade-ammo .grenade"))
     }
 }
 
@@ -396,13 +397,10 @@ function selectActualWeapon(){
         }
     })
     var equipped = character.inventory.getEquippedWeapons();
-    console.log(equipped)
     if(equipped.length !== 0){
         equipped.forEach(function(item){
-            addWeaponOptionSelect('main-weapon-'+item.id, item.weapon_type + ' ' + item.brand, !!(item.actual))
+            addWeaponOptionSelect('main_slot_'+item.slot, item.weapon_type + ' ' + item.brand, !!(item.actual))
         })
-    }else{
-        addWeaponOptionSelect('none', 'Aucune arme d\'équipée', true)
     }
 }
 
@@ -751,6 +749,9 @@ var ControllerSlot = function () {
     //On refresh l'affichage
     displaySheet(); //On refresh la fiche en cas de changement de shield
     displayInventory();
+    displayHUD();
+    $("#main-weapon").trigger('change')
+
     $(".item-controller").hide()
 
     //clean vars
@@ -770,15 +771,23 @@ var ControllerPool = function () {
     }
 }
 
-//TODO: Revoir
-//Fonction de gestion de l'arme en main
 var ControllerMainWeapon = function (){
     printlog('ControllerPool')
+    character.inventory.getEquippedWeapons().forEach(function(item, id){
+        if(item.actual)
+            delete item.actual
+    })
+
     var val = $(this).val();
 
-    if(val !== 'none'){
-        current_weapon = character.inventory.getItem(parseInt($(this).val().substr(12,13)))
 
+    if(val !== 'none' && val !== 'Sélectionnez votre arme en main'){
+        var id = $(this).val();
+        var id_current = $("#"+id+" .item").attr('id')
+        current_weapon = character.inventory.getItem(parseInt(id_current))
+        current_weapon.actual = true
+
+        console.log(current_weapon);
         $(".main-hud .hud-part.weapons .weapon-ammo img")
             .attr('src', 'images/'+current_weapon.weapon_type.replace('_', '-')+".png")
 
@@ -799,7 +808,6 @@ var ControllerMainWeapon = function (){
 }
 
 
-//TODO: Ne pas permettre de vendre / jeter / déplacer dans l'inventaire la seule arme que l'on a d'équipée !
 function ControllerSale() {
     printlog('ControllerSale')
     if (confirm('Êtes vous sûr de vouloir vendre cet(s) item(s) ? Attention, cette action est irréversible.')) {
@@ -809,7 +817,6 @@ function ControllerSale() {
             var promptContent = '';
             if (item.type === itemType.WEAPON) {
                 if(item.actual) {
-                    $("#main-weapon").trigger('change')
                     delete item.actual
                 }
                 delete item.slot;
@@ -864,6 +871,8 @@ function ControllerSale() {
         refresh('money', character['money'])
         displayPool();
         displayInventory();
+        displayHUD();
+        $("#main-weapon").trigger('change')
     }
 }
 
@@ -877,7 +886,6 @@ function ControllerDrop() {
             if (item.type === itemType.WEAPON) {
                 delete item.slot;
                 if (item.actual) {
-                    $("#main-weapon").trigger('change')
                     delete item.actual
                 }
             }
@@ -913,6 +921,8 @@ function ControllerDrop() {
     displaySheet();
     displayInventory();
     displayPool();
+    displayHUD();
+    $("#main-weapon").trigger('change')
 }
 
 //TODO : Achat
