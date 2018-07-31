@@ -225,6 +225,12 @@
         </div>
     </div>
 
+    <div class="drop-pool-cntnr">
+        <ul class="drop-pool"></ul>
+        <button class="pool-controller back" onClick="getBackItem()">Récupérer cet item</button>
+        <button class="pool-controller empty" onClick="cleanPool()">Vider la pool</button>
+    </div>
+
     <div class="hud">
         <h3>Controllers</h3>
         <div class="controllers">
@@ -278,10 +284,57 @@
             </div>
         </div>
     </div>
-    <div class="drop-pool-cntnr">
-        <ul class="drop-pool"></ul>
-        <button class="pool-controller back" onClick="getBackItem()">Récupérer cet item</button>
-        <button class="pool-controller empty" onClick="cleanPool()">Vider la pool</button>
+
+    <div class="shop">
+        <div class="shop-mun">
+            <div class="section muns">
+                <div class="title">Armes</div>
+                <div class="content muns">
+                    <ul class="muns-slots">
+                        <li class="mun-slot SMG">Munitions SMG</li>
+                        <li class="mun-slot sniper-rifle">Munitions Sniper</li>
+                        <li class="mun-slot combat-rifle">Munitions Mitrailleuse</li>
+                        <li class="mun-slot revolver">Munitions Revolver</li>
+                        <li class="mun-slot shotgun">Munitions Fusil à pompe</li>
+                    </ul>
+                </div>
+                <div class="title">Grenades</div>
+                <div class="content muns">
+                    <ul class="muns-slots">
+                        <li class="mun-slot grenade">Munitions Grenades</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="section KOS">
+                <div class="title">Kit d'Optimisation de Stockage</div>
+                <select class="" id="select-kos-level">
+                    <option value="1" class="white">KOS</option>
+                    <option value="2" class="blue">KOS</option>
+                    <option value="3" class="green">KOS</option>
+                    <option value="4" class="violet">KOS</option>
+                </select>
+                <div class="content kos">
+                    <ul class="kos-slots">
+                        <li class="kos-slot SMG">Munitions SMG</li>
+                        <li class="kos-slot sniper-rifle">Munitions Sniper</li>
+                        <li class="kos-slot combat-rifle">Munitions Mitrailleuse</li>
+                        <li class="kos-slot revolver">Munitions Revolver</li>
+                        <li class="kos-slot shotgun">Munitions Fusil à pompe</li>
+                        <li class="kos-slot grenade">Munitions Grenades</li>
+                    </ul>
+                </div>
+                <div class="content grenade-mod">
+                    <button onClick="">Acheter un mode de grenade</button>
+                </div>
+            </div>
+        </div>
+        <div class="shop-weapons">
+            <button onClick="">Acheter une arme</button>
+        </div>
+        <div class="shop-health">
+            <button onClick="BuyHealth('kit')">Acheter un kit de soin instantanée</button>
+            <button onClick="BuyHealth('trousse')">Acheter une trousse de soin instantanée</button>
+        </div>
     </div>
 
 </div>

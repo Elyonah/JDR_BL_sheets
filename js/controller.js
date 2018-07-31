@@ -461,6 +461,29 @@ function regenHealth() {
     resetControllerInput();
 }
 
+function BuyHealth(type){
+    var value = 0;
+    var price = 0;
+    if(type === 'trousse'){
+        value = 30;
+        price = 20;
+    }
+    if(type === 'kit'){
+        value = 15;
+        price = 10;
+    }
+    if(!(character.money - price < 0)){
+        if (character.current_health + value > character.max_health)
+            character.regenHealth();
+        else
+            character.current_health += value;
+        character.money -= price;
+    }else{
+        alert('Vous n\'avez pas assez d\'argent pour acheter ceci.')
+    }
+
+}
+
 function regenShield() {
     printlog('regenShield')
     var value = parseInt($("#main_controller").val());
