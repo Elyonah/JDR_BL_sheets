@@ -33,7 +33,7 @@ class Character{
     }
     levelUp(){
         printlog("Character:: levelUp")
-        this.max_health = this.level + 15;
+        this.max_health += 15;
         this.max_xp = this.calcMaxXP();
         this.current_xp = 0;
         this.current_level += 1;
@@ -47,7 +47,6 @@ class Character{
     regenShield(){
         printlog('Character:: regenShield')
         var shield = this.inventory.getShieldEquipped()
-        console.log(shield)
         if(shield){
             shield.current_value = shield.capacity
         }
@@ -78,6 +77,16 @@ class Character{
             if (rest !== 0)
                 this.current_xp += rest;
         }
+    }
+    getAmmoValueByType(weaponType){
+        printlog('Character:: getAmmoValueByType')
+        var value = null;
+        this.ammo.forEach(function(s_ammo){
+            if(s_ammo.type == weaponType){
+                value = s_ammo.value;
+            }
+        })
+        return value
     }
     toJson(){
         printlog('Character:: toJson');

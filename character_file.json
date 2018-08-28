@@ -22,7 +22,7 @@
 			"weapon_type": "sniper_rifle",
 			"damages": 15,
 			"accuracy": 70,
-			"fire_rate": 3,
+			"fire_rate": 1,
 			"recoil": 1,
 			"retreat": 5,
 			"max_ammo": 5,

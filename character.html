@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Borderlands JDR UI Character File</title>
     <link rel="stylesheet" href="css/module.css">
-    <script
-            src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-            crossorigin="anonymous"></script>
+    <script src="js/jquery-min.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/enums.js"></script>
     <script src="js/character.js"></script>
@@ -62,31 +59,42 @@
                             <div id="class"></div>
                         </div>
                         <div class="window-content">
-                            <div class="level">
-                                <label for="level">Level</label>
-                                <div class="level-bar">
-                                    <span id="current_level"></span>
+                            <div class="level info-bar">
+                                <label for="level">Niveau</label>
+                                <div class="bar level_bar">
+                                    <div class="alt-bar"></div>
+                                    <div class="alt-text">
+                                        <span class="current_level"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="xp">
+                            <div class="xp info-bar">
                                 <label for="xp">XP</label>
-                                <div class="xp-header">
-                                    <span id="current_xp"></span> / <span id="max_xp"></span>
-                                </div>
-                                <div id="xp_bar"></div>
-                            </div>
-                            <div class="shield">
-                                <label for="shield"><img alt="shield" src=""/></label>
-                                <div class="shield-bar">
-                                    <span id="current_shield"></span> / <span id="max_shield"></span>
-                                    <span id="current_shield_cntnr"></span>
+                                <div class="info-bar-content">
+                                    <div class="alt-text">
+                                       <span class="current_xp"></span> / <span class="max_xp"></span>
+                                    </div>
+                                    <div class="xp_bar bar">
+                                        <div class="alt-bar"></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="health">
-                                <label for="health"><img alt="health" src=""/></label>
-                                <div class="health-bar">
-                                    <span id="current_health"></span> / <span id="max_health"></span>
-                                    <span id="current_health_cntnr"></span>
+                            <div class="shield info-bar">
+                                <label for="shield"><i class="icon-shield"></i></label>
+                                <div class="bar shield_bar">
+                                    <div class="alt-bar"></div>
+                                    <div class="alt-text">
+                                        <span class="current_shield"></span> / <span class="max_shield"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="health info-bar">
+                                <label for="health"><i class="icon-plus"></i></label>
+                                <div class="bar health_bar">
+                                    <div class="alt-bar"></div>
+                                    <div class="alt-text">
+                                        <span class="current_health"></span> / <span class="max_health"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +117,7 @@
                     <div class="content">
                         <div class="inventory-slots">
                             <div class="inventory-slots-counter">
-                                <span id="current_slots"></span>/<span id="max_slots"></span>
+                                <span class="current_slots"></span>/<span class="max_slots"></span>
                             </div>
                             <div class="subtitle">Weapons</div>
                             <ul class="inventory-list list-weapons">
@@ -139,38 +147,38 @@
                     <ul class="ammo-list">
                         <li id="ammo-repeater_pistol">
                             <img src="images/repeater-pistol.png" alt="ammo repeater_pistol"/>
-                            <span class="max"></span>
                             <span class="current"></span>
+                            <span class="max"></span>
                         </li>
                         <li id="ammo-revolver">
                             <img src="images/revolver.png" alt="ammo revolver"/>
-                            <span class="max"></span>
                             <span class="current"></span>
+                            <span class="max"></span>
                         </li>
                         <li id="ammo-smg">
                             <img src="images/smg.png" alt="ammo smg"/>
-                            <span class="max"></span>
                             <span class="current"></span>
+                            <span class="max"></span>
                         </li>
                         <li id="ammo-shotgun">
                             <img src="images/shotgun.png" alt="ammo shotgun"/>
-                            <span class="max"></span>
                             <span class="current"></span>
+                            <span class="max"></span>
                         </li>
                         <li id="ammo-combat_rifle">
                             <img src="images/combat-rifle.png" alt="ammo combat-rifle"/>
-                            <span class="max"></span>
                             <span class="current"></span>
+                            <span class="max"></span>
                         </li>
                         <li id="ammo-sniper_rifle">
                             <img src="images/sniper-rifle.png" alt="ammo sniper-rifle"/>
-                            <span class="max"></span>
                             <span class="current"></span>
+                            <span class="max"></span>
                         </li>
                         <li id="ammo-grenade">
                             <img src="images/grenade.png" alt="ammo grenade"/>
-                            <span class="max"></span>
                             <span class="current"></span>
+                            <span class="max"></span>
                         </li>
                     </ul>
                 </div>
@@ -241,33 +249,38 @@
             <button class="controller" onClick="gainXP()">Gain XP</button>
             <button class="controller" hidden="hidden" onClick="correctXP()">Correction XP</button>
             <button class="controller shoot" onClick="Shoot()">Tirer !</button>
+            <button class="controller reload" onClick="Reload()">Recharger</button>
             <select id="main-weapon" name="main_weapon">
                 <option selected>Sélectionnez votre arme en main</option>
             </select>
         </div>
         <div class="main-hud">
             <div class="hud-part health-shield">
-                <div class="shield">
+                <div class="shield info-bar">
                     <i class="icon-shield"></i>
-                    <div class="shield-bar">
-                        <span class="current_shield"></span> / <span class="max_shield"></span>
-                        <span class="current_shield_cntnr"></span>
+                    <div class="bar shield_bar">
+                        <div class="alt-bar"></div>
+                        <div class="alt-text">
+                            <span class="current_shield"></span> / <span class="max_shield"></span>
+                        </div>
                     </div>
                 </div>
-                <div class="health">
+                <div class="health info-bar">
                     <i class="icon-plus"></i>
-                    <div class="health-bar">
-                        <span class="current_health"></span> / <span class="max_health"></span>
-                        <span class="current_health_cntnr"></span>
+                    <div class="bar health_bar">
+                        <div class="alt-bar"></div>
+                        <div class="alt-text">
+                            <span class="current_health"></span> / <span class="max_health"></span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="hud-part xp">
-                <div class="level">
+            <div class="hud-part xp info-bar">
+                <div class="alt-text">
                     <span class="class"></span> NIVEAU <span class="current_level"></span>
                 </div>
-                <div class="xp">
-                    <div class="xp_bar"></div>
+                <div class="bar xp_bar">
+                    <div class="alt-bar"></div>
                 </div>
             </div>
             <div class="hud-part weapons">
@@ -275,9 +288,12 @@
                     <ul class="grenades"></ul>
                     <img src="images/grenade.png"/>
                 </div>
-                <div class="weapon-ammo">
-                    <div class="bar">
-                        <span class="value"></span> / <span class="max"></span>
+                <div class="weapon-ammo info-bar">
+                    <div class="bar ammo_bar">
+                        <div class="alt-bar"></div>
+                        <div class="alt-text">
+                            <span class="current_w_current_ammo"></span> / <span class="current_w_max_ammo"></span>
+                        </div>
                     </div>
                     <img src=""/>
                 </div>
@@ -285,7 +301,7 @@
         </div>
     </div>
 
-    <div class="shop">
+    <!--<div class="shop">
         <div class="shop-mun">
             <div class="section muns">
                 <div class="title">Armes</div>
@@ -335,7 +351,7 @@
             <button onClick="BuyHealth('kit')">Acheter un kit de soin instantanée</button>
             <button onClick="BuyHealth('trousse')">Acheter une trousse de soin instantanée</button>
         </div>
-    </div>
+    </div>-->
 
 </div>
 

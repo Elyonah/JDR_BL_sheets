@@ -1,101 +1,102 @@
-.inventory-slots{
-  .inventory-slots-counter{}
-  .subtitle{
-    font-family: @scnd-font;
-    color: dimgrey;
-    &:before{
-      content: '';
-      min-width: 10px;
-      height: 1px;
+#inventory{
+  .inventory-slots{
+    .inventory-slots-counter{}
+    .subtitle{
+      font-family: @scnd-font;
+      color: dimgrey;
+      &:before{
+        content: '';
+        min-width: 10px;
+        height: 1px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px;
+        background-color: dimgrey;
+      }
+    }
+    .inventory-list{
+      .item{
+        .item-name{
+
+        }
+        .item-brand{
+          text-transform: uppercase;
+        }
+        &.active{
+          background-color: @yellow-hover;
+        }
+      }
+
+    }
+  }
+
+  .hand-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    .main-weapons, .other-stuff{
+      width: 50%;
       display: inline-block;
-      vertical-align: middle;
-      margin-right: 10px;
-      background-color: dimgrey;
-    }
-  }
-  .inventory-list{
-    .item{
-      .item-name{
-
-      }
-      .item-brand{
-        text-transform: uppercase;
-      }
-      &.active{
-        background-color: @yellow-hover;
-      }
-    }
-
-  }
-}
-
-.hand-content{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  .main-weapons, .other-stuff{
-    width: 50%;
-    display: inline-block;
-    .weapon-section{
-      background-color: @bg-back;
-      padding: 20px 10px 20px 30px;
-      border: 2px solid @borders;
-      position: relative;
-      &:not(:last-child){
-        margin-bottom: 20px;
-      }
-      &.disabled{
-        opacity: 0.5;
-        &:before{
-          content: @icon-lock;
-          position: absolute;
-          .icon-font();
-          color: @white;
-          font-size: 18px;
-          display: inline-block;
-          vertical-align: middle;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 100%;
-          left: 0;
-          text-align: center;
+      .weapon-section{
+        background-color: @bg-back;
+        padding: 20px 10px 20px 30px;
+        border: 2px solid @borders;
+        position: relative;
+        &:not(:last-child){
+          margin-bottom: 20px;
+        }
+        &.disabled{
+          opacity: 0.5;
+          &:before{
+            content: @icon-lock;
+            position: absolute;
+            .icon-font();
+            color: @white;
+            font-size: 18px;
+            display: inline-block;
+            vertical-align: middle;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            left: 0;
+            text-align: center;
+          }
         }
       }
     }
   }
-}
 
+  .item{
+    cursor: pointer;
+    .item-name{
 
-.item{
-  cursor: pointer;
-  .item-name{
-
-  }
-  .item-brand{
-    text-transform: uppercase;
-  }
-  &.active{
-    background-color: @yellow-hover;
-  }
-}
-
-.ammo-list{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  li{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    img{
-      height: 50px;
-      display: block;
-      margin: 0 auto;
     }
-    span.current, span.max{
-      display: block;
+    .item-brand{
+      text-transform: uppercase;
+    }
+    &.active{
+      background-color: @yellow-hover;
+    }
+  }
+
+  .ammo-list{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    li{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      img{
+        height: 50px;
+        display: block;
+        margin: 0 auto;
+      }
+      span.current, span.max{
+        display: block;
+      }
     }
   }
 }

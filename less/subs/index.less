@@ -1,0 +1,24 @@
+body{
+  #index{
+    &.content{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      .new_character, .import_character{
+        padding: 10px 20px;
+        flex-grow: 1;
+        flex-basis: 0;
+        h2{
+          padding-bottom: 20px;
+        }
+        .form-row{
+          display: block;
+          margin-bottom: 10px;
+        }
+        label{
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

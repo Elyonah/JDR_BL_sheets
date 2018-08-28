@@ -20,10 +20,17 @@ class Weapon extends Item{
 	}
 
 	Shoot(){
-		this.ammo -= 1;
+		printlog('Weapon:: Shoot')
+
 	}
 
 	Reload(){
-		this.ammo = this.max_ammo 
+		this.inventory.ammo.forEach(function(value){
+			if(value.type === character.main_weapon.weapon_type){
+
+			}
+		})
+		this.current_ammo = this.max_ammo
+
 	}
 }

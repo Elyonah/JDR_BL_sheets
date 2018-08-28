@@ -2,6 +2,7 @@ var character = null;
 var current_item_cntnr = null;
 var current_weapon = null;
 var dropPool = [];
+var lvlmax = 50;
 
 $(document).ready(function () {
     character_json = JSON.parse(localStorage.getItem("character"));
@@ -73,9 +74,7 @@ $(document).ready(function () {
     character_json['ammo'].forEach(function (item, id){
         var mun = new Ammo(item.type, item.value, item.capacity_max)
         character.ammo.push(mun)
-    })
-
-    console.log(character);
+    });
 
     displayHeader();
     displaySheet();
@@ -83,6 +82,14 @@ $(document).ready(function () {
     displayInventory();
     displayAmmo();
     displayHUD();
+    refreshBar('health')
+    refreshBar('shield')
+    refreshBar('xp')
+    refreshBar('level')
+    $("#inventory .window").each(function(item){
+        $(this).hide()
+    })
+
     /*displaySkills();*/
 
     $(".item-controller").hide()
@@ -92,6 +99,7 @@ $(document).ready(function () {
     $("#main-weapon").on('change', ControllerMainWeapon)
     //On check au début
     $("#main-weapon").trigger('change')
+    refreshBar('ammo')
 });
 
 function cleanActiveItem() {
@@ -136,7 +144,7 @@ function addWeaponOptionSelect(id, name, actual){
 
 function resetControllerInput() {
     printlog('resetControllerInput')
-    $("#main_controller").val("");
+    //$("#main_controller").val("");
 }
 
 //Validation input dans Controller
@@ -161,14 +169,57 @@ function displaySheet() {
     $("#player_name").val(character.player_name);
     $("#class").html(character.character_class);
     $("#gender").html(character.character_gender);
-    $("#current_level").html(character.current_level);
-    $("#current_xp").html(character.current_xp);
-    $("#max_xp").html(character.calcMaxXP());
-    $("#current_shield").html(character.inventory.getCurrentShieldValue())
-    $("#max_shield").html(character.inventory.getCurrentShieldMax());
-    $("#current_health").html(character.current_health);
-    $("#max_health").html(character.calcMaxHealth());
+    $(".current_level").html(character.current_level);
+    $(".current_xp").html(character.current_xp);
+    $(".max_xp").html(character.calcMaxXP());
+    $(".current_shield").html(character.inventory.getCurrentShieldValue())
+    $(".max_shield").html(character.inventory.getCurrentShieldMax());
+    $(".current_health").html(character.current_health);
+    $(".max_health").html(character.calcMaxHealth());
     $("#money").html(character.money);
+}
+
+/*function displayBars(){
+    $(".bar").each(function(id, bar){
+        console.log(this)
+        var current_position = 0.0;
+        if($(this).hasClass('xp_bar')){
+            current_position = (character.current_xp * 100) / character.calcMaxXP()
+        }
+        if($(this).hasClass('level_bar')){
+            current_position = (character.current_level * 100) / lvlmax
+        }
+        if($(this).hasClass('shield_bar')){
+            current_position = (character.inventory.getCurrentShieldValue() * 100 ) / character.inventory.getCurrentShieldMax()
+        }
+        if($(this).hasClass('health_bar')){
+            current_position = (character.current_health * 100) / character.calcMaxHealth()
+        }
+        if($(this).hasClass('ammo_bar')){
+            current_position = (current_weapon.current_ammo * 100) / current_weapon.max_ammo
+        }
+        console.log(current_position)
+        $(this).children('.alt-bar').css('width', current_position + '%')
+    })
+}*/
+
+function refreshBar(bar_type){
+    if(bar_type === 'xp'){
+        current_position = (character.current_xp * 100) / character.calcMaxXP()
+    }
+    if(bar_type === 'level'){
+        current_position = (character.current_level * 100) / lvlmax
+    }
+    if(bar_type === 'shield'){
+        current_position = (character.inventory.getCurrentShieldValue() * 100 ) / character.inventory.getCurrentShieldMax()
+    }
+    if(bar_type === 'health'){
+        current_position = (character.current_health * 100) / character.calcMaxHealth()
+    }
+    if(bar_type === 'ammo'){
+        current_position = (current_weapon.current_ammo * 100) / current_weapon.max_ammo
+    }
+    $(".bar."+bar_type+'_bar').children('.alt-bar').css('width', current_position + '%')
 }
 
 function displayInventory() {
@@ -270,7 +321,6 @@ function displayInventory() {
     character['inventory']['mods_class'].forEach(function (item, id) {
         var cntnr = $('.list-mods');
         var cntnrType = '<li>';
-        console.log(item)
         if (item['equipped']) {
             cntnr = $('.weapon-section.mod-class-cntnr')
             cntnrType = '<div>';
@@ -316,8 +366,8 @@ function displayAmmo(){
     //clean values
     $("ul.ammo-list li span").html('');
     character.ammo.forEach(function(item, id){
-        $("ul.ammo-list li#ammo-"+item.type +" span.current").append(item.value)
         $("ul.ammo-list li#ammo-"+item.type +" span.max").append(item.max)
+        $("ul.ammo-list li#ammo-"+item.type +" span.current").append(item.value)
     })
 }
 
@@ -406,7 +456,7 @@ function selectActualWeapon(){
 
 function refresh(idCntnr, value) {
     printlog('refresh')
-    $("#" + idCntnr).empty().html(value);
+    $("." + idCntnr).empty().html(value);
 }
 
 /*Permet de clean les fenêtres d'aperçu des armes*/
@@ -430,11 +480,12 @@ function TakeHit() {
 
     if (character.current_health === 0) {
         $("body").addClass("combat-survie");
-    } else {
-        $("body").removeClass("combat-survie");
     }
     refresh("current_health", character.current_health);
     refresh("current_shield", character.inventory.getCurrentShieldValue());
+    displaySheet();
+    refreshBar('shield');
+    refreshBar('health');
     resetControllerInput();
 }
 
@@ -458,6 +509,9 @@ function regenHealth() {
     }
 
     refresh("current_health", character.current_health)
+    $("body").removeClass("combat-survie");
+    displaySheet()
+    refreshBar('health')
     resetControllerInput();
 }
 
@@ -500,6 +554,8 @@ function regenShield() {
     }
 
     refresh("current_shield", character.inventory.getCurrentShieldValue())
+    displaySheet()
+    refreshBar('shield')
     resetControllerInput();
 }
 
@@ -517,6 +573,13 @@ function gainXP() {
     refresh("max_xp", character.calcMaxXP());
     refresh("current_level", character.current_level);
     refresh("max_health", character.calcMaxHealth());
+    refresh("current_health", character.current_health);
+    refresh("current_shield", character.inventory.getCurrentShieldValue())
+    displaySheet()
+    refreshBar('xp')
+    refreshBar('level')
+    refreshBar('health')
+    refreshBar('shield')
     resetControllerInput();
 }
 
@@ -535,6 +598,8 @@ function correctXP() {
         character.current_xp = 0;
 
     refresh("current_xp", character.current_xp);
+    displaySheet()
+    refreshBar('xp')
     resetControllerInput();
 }
 
@@ -556,6 +621,70 @@ function correctLevel() {
 
 function Shoot(){
     printlog('Shoot')
+    if(current_weapon !== null){
+        if(current_weapon.current_ammo >= current_weapon.fire_rate){
+            current_weapon.current_ammo -= current_weapon.fire_rate;
+            refreshBar('ammo')
+            refresh('current_w_current_ammo', current_weapon.current_ammo)
+        }
+        else if(current_weapon.current_ammo < current_weapon.fire_rate && current_weapon.current_ammo > 0){
+            current_weapon.current_ammo = 0
+            refreshBar('ammo')
+            refresh('current_w_current_ammo', current_weapon.current_ammo)
+        }
+        else{
+            alert('Vous devez recharger votre arme')
+        }
+    }else{
+        alert('Merci de vous équiper d\'une arme avant de tirer')
+    }
+}
+
+function Reload(){
+    printlog('Reload')
+    if(current_weapon !== null){
+        var currentAmmo = character.ammo.filter(function (obj) {
+            return obj.type === current_weapon.weapon_type
+        })
+
+        var currentI = currentAmmo[0].value
+        var maxW = current_weapon.max_ammo;
+        var currentW = current_weapon.current_ammo;
+
+        if(currentI > 0){
+            if(currentW !== maxW){
+                var needToReload
+                if(currentI >= maxW){
+                    needToReload = maxW - currentW
+                }else{
+                    if(currentI + currentW > maxW){
+                        needToReload = maxW - currentW
+                    }else{
+                        needToReload = currentI;
+                    }
+                }
+
+                current_weapon.current_ammo += needToReload
+                character.ammo.forEach(function (s_ammo) {
+                    if(s_ammo.type === current_weapon.weapon_type){
+                        s_ammo.value -= needToReload
+                        refresh('current_w_max_ammo', s_ammo.value)
+                    }
+                });
+
+                refresh('current_w_current_ammo', current_weapon.current_ammo)
+                refreshBar('ammo')
+                displayAmmo()
+            }else{
+                alert('Votre arme est déjà rechargée.')
+            }
+        }else{
+            alert('Vous êtes à court de munition !')
+        }
+    }else{
+        alert('Merci de vous équiper d\'une arme avant de recharger')
+    }
+
 }
 
 /*Inventory functions*/
@@ -623,6 +752,7 @@ function getBackItem() {
             refresh('money', character['money'])
             cleanActiveItem();
 
+            displaySheet();
             displayInventory();
             displayPool();
         }
@@ -693,6 +823,7 @@ var clickItem = function () {
                     }
                 }
             }
+
         } else {
             if (item.type === itemType.WEAPON) {
                 for (var i = 1; i <= character.inventory['enable_weapons_slots']; i++) {
@@ -709,12 +840,15 @@ var clickItem = function () {
                 if(!item.unusable)
                     addOptionSelect('mod_slot', 'Emplacement de mode de classe')
             }
+            $("#current_inventory_weapon").show();
+            $("#current_inventory_weapon").children('.window-name').empty().html(item.type)
+            $("#current_inventory_weapon").children('.window-content').empty().html(item.rarity)
         }
     } else if (active_items > 1) {
         $(".item-controller.slots").hide();
     } else {
         $(".item-controller").hide();
-    }
+        $("#inventory .window").hide();
 };
 
 //Fonction de déplacement d'un item
@@ -747,10 +881,14 @@ var ControllerSlot = function () {
         }
         if (!active_item.equipped) {
             active_item.equipped = true;
-            if (active_item.type === itemType.WEAPON)
+            if (active_item.type === itemType.WEAPON){
                 active_item.slot = parseInt(destination.substring(10, 11))
-            if (active_item.type === itemType.SHIELD)
+                refreshBar('ammo')
+            }
+            if (active_item.type === itemType.SHIELD){
                 active_item.current_value = active_item.capacity
+                refreshBar('shield')
+            }
         }
         if (active_item.equipped && active_item.type === itemType.WEAPON) {
             active_item.slot = parseInt(destination.substring(10, 11))
@@ -772,7 +910,9 @@ var ControllerSlot = function () {
     //On refresh l'affichage
     displaySheet(); //On refresh la fiche en cas de changement de shield
     displayInventory();
+    displayAmmo();
     displayHUD();
+    refreshBar('ammo')
     $("#main-weapon").trigger('change')
 
     $(".item-controller").hide()
@@ -810,26 +950,26 @@ var ControllerMainWeapon = function (){
         current_weapon = character.inventory.getItem(parseInt(id_current))
         current_weapon.actual = true
 
-        console.log(current_weapon);
         $(".main-hud .hud-part.weapons .weapon-ammo img")
             .attr('src', 'images/'+current_weapon.weapon_type.replace('_', '-')+".png")
 
-        $(".main-hud .hud-part.weapons .weapon-ammo span.value")
+        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_current_ammo")
             .html(current_weapon.current_ammo)
-        $(".main-hud .hud-part.weapons .weapon-ammo span.max")
-            .html(current_weapon.max_ammo)
+
+        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_max_ammo")
+            .html(character.getAmmoValueByType(current_weapon.weapon_type))
     }else{
         $(".main-hud .hud-part.weapons .weapon-ammo img")
             .attr('src', '')
 
-        $(".main-hud .hud-part.weapons .weapon-ammo span.value")
+        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_current_ammo")
             .html(0)
-        $(".main-hud .hud-part.weapons .weapon-ammo span.max")
+        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_max_ammo")
             .html(0)
+        current_weapon = null;
     }
-
+    refreshBar('ammo')
 }
-
 
 function ControllerSale() {
     printlog('ControllerSale')
@@ -895,6 +1035,7 @@ function ControllerSale() {
         displayPool();
         displayInventory();
         displayHUD();
+        refreshBar('ammo')
         $("#main-weapon").trigger('change')
     }
 }
@@ -945,6 +1086,7 @@ function ControllerDrop() {
     displayInventory();
     displayPool();
     displayHUD();
+    refreshBar('ammo')
     $("#main-weapon").trigger('change')
 }
 
