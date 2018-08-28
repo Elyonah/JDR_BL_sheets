@@ -837,7 +837,7 @@ var clickItem = function () {
                 addOptionSelect('grenade_slot', 'Emplacement de mode de grenade')
             }
             if (item.type === itemType.MOD_CLASS) {
-                if(!item.unusable)
+                if (!item.unusable)
                     addOptionSelect('mod_slot', 'Emplacement de mode de classe')
             }
             $("#current_inventory_weapon").show();
@@ -849,159 +849,213 @@ var clickItem = function () {
     } else {
         $(".item-controller").hide();
         $("#inventory .window").hide();
-};
+    }
+}
 
 //Fonction de déplacement d'un item
-var ControllerSlot = function () {
-    printlog('ControllerSlot')
-    //On récupère l'item dans l'inventaire
-    var active_item = character.inventory.getItem(parseInt($("#inventory .item.active").attr('id')))
-    //On récupère la destination
-    var destination = $("select.item-controller.slots").val();
+    var ControllerSlot = function () {
+        printlog('ControllerSlot')
+        //On récupère l'item dans l'inventaire
+        var active_item = character.inventory.getItem(parseInt($("#inventory .item.active").attr('id')))
+        //On récupère la destination
+        var destination = $("select.item-controller.slots").val();
 
-    //Si la destination est un slot
-    if (destination !== 'inventory-list') {
-        //Si le slot n'est pas vide
-        if ($.trim($('#' + destination).html()).length) {
-            var id_occupant = $("#" + destination + " .item").attr('id')
-            var occupant = character.inventory.getItem(parseInt(id_occupant))
-            //Si l'active_item est déjà équipé (uniquement pour weapon), on échange les places
-            if (active_item.type === itemType.WEAPON && active_item.equipped) {
-                var slot = occupant['slot'];
-                occupant.slot = active_item.slot
-                active_item.slot = slot;
-            } else {
-                //Sinon on déplace l'occupant dans l'inventaire
-                occupant.equipped = false;
-                if (active_item.type === itemType.WEAPON)
-                    delete occupant.slot
-                if (active_item.type === itemType.SHIELD)
-                    delete occupant.current_value
-            }
-        }
-        if (!active_item.equipped) {
-            active_item.equipped = true;
-            if (active_item.type === itemType.WEAPON){
-                active_item.slot = parseInt(destination.substring(10, 11))
-                refreshBar('ammo')
-            }
-            if (active_item.type === itemType.SHIELD){
-                active_item.current_value = active_item.capacity
-                refreshBar('shield')
-            }
-        }
-        if (active_item.equipped && active_item.type === itemType.WEAPON) {
-            active_item.slot = parseInt(destination.substring(10, 11))
-        }
-    } else {
-        //La destination est Inventaire
-        //On vérifie le nombre de slot disponible
-        if (character.inventory.countAvailablesSlots() <= 0) {
-            alert('Vous n\'avez plus de place dans votre inventaire. Rendez-vous au distributeur le plus proche pour vendre des items ou jeter un item.')
-        } else {
-            active_item.equipped = false;
-            if (active_item.type === itemType.WEAPON)
-                delete active_item.slot
-            if (active_item.type === itemType.SHIELD)
-                delete active_item.current_value
-        }
-    }
-
-    //On refresh l'affichage
-    displaySheet(); //On refresh la fiche en cas de changement de shield
-    displayInventory();
-    displayAmmo();
-    displayHUD();
-    refreshBar('ammo')
-    $("#main-weapon").trigger('change')
-
-    $(".item-controller").hide()
-
-    //clean vars
-    cleanActiveItem();
-    current_item_cntnr = null;
-}
-//Fonction de récupération d'un item
-var ControllerPool = function () {
-    printlog('ControllerPool')
-    current_item_cntnr = $(this);
-    current_item_cntnr.toggleClass('active')
-
-    if ($('ul.drop-pool li.active').length > 0) {
-        $(".pool-controller.back").show();
-    } else {
-        $(".pool-controller.back").hide();
-    }
-}
-
-var ControllerMainWeapon = function (){
-    printlog('ControllerPool')
-    character.inventory.getEquippedWeapons().forEach(function(item, id){
-        if(item.actual)
-            delete item.actual
-    })
-
-    var val = $(this).val();
-
-
-    if(val !== 'none' && val !== 'Sélectionnez votre arme en main'){
-        var id = $(this).val();
-        var id_current = $("#"+id+" .item").attr('id')
-        current_weapon = character.inventory.getItem(parseInt(id_current))
-        current_weapon.actual = true
-
-        $(".main-hud .hud-part.weapons .weapon-ammo img")
-            .attr('src', 'images/'+current_weapon.weapon_type.replace('_', '-')+".png")
-
-        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_current_ammo")
-            .html(current_weapon.current_ammo)
-
-        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_max_ammo")
-            .html(character.getAmmoValueByType(current_weapon.weapon_type))
-    }else{
-        $(".main-hud .hud-part.weapons .weapon-ammo img")
-            .attr('src', '')
-
-        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_current_ammo")
-            .html(0)
-        $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_max_ammo")
-            .html(0)
-        current_weapon = null;
-    }
-    refreshBar('ammo')
-}
-
-function ControllerSale() {
-    printlog('ControllerSale')
-    if (confirm('Êtes vous sûr de vouloir vendre cet(s) item(s) ? Attention, cette action est irréversible.')) {
-        $("#inventory .item.active").each(function () {
-            var item = character.inventory.getItem(parseInt($(this).attr('id')))
-            item.equipped = false;
-            var promptContent = '';
-            if (item.type === itemType.WEAPON) {
-                if(item.actual) {
-                    delete item.actual
+        //Si la destination est un slot
+        if (destination !== 'inventory-list') {
+            //Si le slot n'est pas vide
+            if ($.trim($('#' + destination).html()).length) {
+                var id_occupant = $("#" + destination + " .item").attr('id')
+                var occupant = character.inventory.getItem(parseInt(id_occupant))
+                //Si l'active_item est déjà équipé (uniquement pour weapon), on échange les places
+                if (active_item.type === itemType.WEAPON && active_item.equipped) {
+                    var slot = occupant['slot'];
+                    occupant.slot = active_item.slot
+                    active_item.slot = slot;
+                } else {
+                    //Sinon on déplace l'occupant dans l'inventaire
+                    occupant.equipped = false;
+                    if (active_item.type === itemType.WEAPON)
+                        delete occupant.slot
+                    if (active_item.type === itemType.SHIELD)
+                        delete occupant.current_value
                 }
-                delete item.slot;
-                promptContent = item['weapon_type'] + ' ' + item.brand
             }
-            if (item.type === itemType.SHIELD){
-                delete item.current_value
-                promptContent = item['type'] + ' ' + item.brand
+            if (!active_item.equipped) {
+                active_item.equipped = true;
+                if (active_item.type === itemType.WEAPON) {
+                    active_item.slot = parseInt(destination.substring(10, 11))
+                    refreshBar('ammo')
+                }
+                if (active_item.type === itemType.SHIELD) {
+                    active_item.current_value = active_item.capacity
+                    refreshBar('shield')
+                }
             }
-            if (item.type === itemType.GRENADE){
-                promptContent = item['grenade_type'] + ' ' + item.brand
+            if (active_item.equipped && active_item.type === itemType.WEAPON) {
+                active_item.slot = parseInt(destination.substring(10, 11))
             }
-            if (item.type === itemType.MOD_CLASS){
-                type = item['class']
-                promptContent = 'Mode de classe ' + item['class']
+        } else {
+            //La destination est Inventaire
+            //On vérifie le nombre de slot disponible
+            if (character.inventory.countAvailablesSlots() <= 0) {
+                alert('Vous n\'avez plus de place dans votre inventaire. Rendez-vous au distributeur le plus proche pour vendre des items ou jeter un item.')
+            } else {
+                active_item.equipped = false;
+                if (active_item.type === itemType.WEAPON)
+                    delete active_item.slot
+                if (active_item.type === itemType.SHIELD)
+                    delete active_item.current_value
             }
+        }
+
+        //On refresh l'affichage
+        displaySheet(); //On refresh la fiche en cas de changement de shield
+        displayInventory();
+        displayAmmo();
+        displayHUD();
+        refreshBar('ammo')
+        $("#main-weapon").trigger('change')
+
+        $(".item-controller").hide()
+
+        //clean vars
+        cleanActiveItem();
+        current_item_cntnr = null;
+    }
+//Fonction de récupération d'un item
+    var ControllerPool = function () {
+        printlog('ControllerPool')
+        current_item_cntnr = $(this);
+        current_item_cntnr.toggleClass('active')
+
+        if ($('ul.drop-pool li.active').length > 0) {
+            $(".pool-controller.back").show();
+        } else {
+            $(".pool-controller.back").hide();
+        }
+    }
+
+    var ControllerMainWeapon = function () {
+        printlog('ControllerPool')
+        character.inventory.getEquippedWeapons().forEach(function (item, id) {
+            if (item.actual)
+                delete item.actual
+        })
+
+        var val = $(this).val();
 
 
-            var price = Number(prompt("Veuillez entrer la valeur de revente pour l'item : " + promptContent, ""));
-            if (price !== '' && !isNaN(price) && price !== 0) {
-                character['money'] += price;
-                item.value = price;
+        if (val !== 'none' && val !== 'Sélectionnez votre arme en main') {
+            var id = $(this).val();
+            var id_current = $("#" + id + " .item").attr('id')
+            current_weapon = character.inventory.getItem(parseInt(id_current))
+            current_weapon.actual = true
+
+            $(".main-hud .hud-part.weapons .weapon-ammo img")
+                .attr('src', 'images/' + current_weapon.weapon_type.replace('_', '-') + ".png")
+
+            $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_current_ammo")
+                .html(current_weapon.current_ammo)
+
+            $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_max_ammo")
+                .html(character.getAmmoValueByType(current_weapon.weapon_type))
+        } else {
+            $(".main-hud .hud-part.weapons .weapon-ammo img")
+                .attr('src', '')
+
+            $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_current_ammo")
+                .html(0)
+            $(".main-hud .hud-part.weapons .weapon-ammo span.current_w_max_ammo")
+                .html(0)
+            current_weapon = null;
+        }
+        refreshBar('ammo')
+    }
+
+    function ControllerSale() {
+        printlog('ControllerSale')
+        if (confirm('Êtes vous sûr de vouloir vendre cet(s) item(s) ? Attention, cette action est irréversible.')) {
+            $("#inventory .item.active").each(function () {
+                var item = character.inventory.getItem(parseInt($(this).attr('id')))
+                item.equipped = false;
+                var promptContent = '';
+                if (item.type === itemType.WEAPON) {
+                    if (item.actual) {
+                        delete item.actual
+                    }
+                    delete item.slot;
+                    promptContent = item['weapon_type'] + ' ' + item.brand
+                }
+                if (item.type === itemType.SHIELD) {
+                    delete item.current_value
+                    promptContent = item['type'] + ' ' + item.brand
+                }
+                if (item.type === itemType.GRENADE) {
+                    promptContent = item['grenade_type'] + ' ' + item.brand
+                }
+                if (item.type === itemType.MOD_CLASS) {
+                    type = item['class']
+                    promptContent = 'Mode de classe ' + item['class']
+                }
+
+
+                var price = Number(prompt("Veuillez entrer la valeur de revente pour l'item : " + promptContent, ""));
+                if (price !== '' && !isNaN(price) && price !== 0) {
+                    character['money'] += price;
+                    item.value = price;
+                    dropPool.push(item);
+                    character.inventory['weapons'].forEach(function (element, id) {
+                        if (item === element) {
+                            cleanActiveItem();
+                            character.inventory['weapons'].splice(id, 1)
+                        }
+                    });
+                    character.inventory['shields'].forEach(function (element, id) {
+                        if (item === element) {
+                            cleanActiveItem();
+                            character.inventory['shields'].splice(id, 1)
+                        }
+                    });
+                    character.inventory['grenades'].forEach(function (element, id) {
+                        if (item === element) {
+                            cleanActiveItem();
+                            character.inventory['grenades'].splice(id, 1)
+                        }
+                    });
+                    character.inventory['mods_class'].forEach(function (element, id) {
+                        if (item === element) {
+                            cleanActiveItem();
+                            character.inventory['mods_class'].splice(id, 1)
+                        }
+                    })
+                } else {
+                    alert('Merci d\'entrer une valeur numérique.')
+                }
+            })
+            refresh('money', character['money'])
+            displayPool();
+            displayInventory();
+            displayHUD();
+            refreshBar('ammo')
+            $("#main-weapon").trigger('change')
+        }
+    }
+
+    function ControllerDrop() {
+        printlog('ControllerDrop')
+        if (confirm('Êtes vous sûr de vouloir jeter cet(s) item(s) ? Attention, cette action est irréversible.')) {
+            $("#inventory .item.active").each(function () {
+                var item = character.inventory.getItem(parseInt($(this).attr('id')))
+                item.value = 0;
+                item.equipped = false;
+                if (item.type === itemType.WEAPON) {
+                    delete item.slot;
+                    if (item.actual) {
+                        delete item.actual
+                    }
+                }
+                if (item.type === itemType.SHIELD)
+                    delete item.current_value
                 dropPool.push(item);
                 character.inventory['weapons'].forEach(function (element, id) {
                     if (item === element) {
@@ -1020,75 +1074,23 @@ function ControllerSale() {
                         cleanActiveItem();
                         character.inventory['grenades'].splice(id, 1)
                     }
-                });
-                character.inventory['mods_class'].forEach(function (element, id){
+                })
+                character.inventory['mods_class'].forEach(function (element, id) {
                     if (item === element) {
                         cleanActiveItem();
                         character.inventory['mods_class'].splice(id, 1)
                     }
                 })
-            } else {
-                alert('Merci d\'entrer une valeur numérique.')
-            }
-        })
-        refresh('money', character['money'])
-        displayPool();
+            })
+        }
+        displaySheet();
         displayInventory();
+        displayPool();
         displayHUD();
         refreshBar('ammo')
         $("#main-weapon").trigger('change')
     }
-}
 
-function ControllerDrop() {
-    printlog('ControllerDrop')
-    if (confirm('Êtes vous sûr de vouloir jeter cet(s) item(s) ? Attention, cette action est irréversible.')) {
-        $("#inventory .item.active").each(function () {
-            var item = character.inventory.getItem(parseInt($(this).attr('id')))
-            item.value = 0;
-            item.equipped = false;
-            if (item.type === itemType.WEAPON) {
-                delete item.slot;
-                if (item.actual) {
-                    delete item.actual
-                }
-            }
-            if (item.type === itemType.SHIELD)
-                delete item.current_value
-            dropPool.push(item);
-            character.inventory['weapons'].forEach(function (element, id) {
-                if (item === element) {
-                    cleanActiveItem();
-                    character.inventory['weapons'].splice(id, 1)
-                }
-            });
-            character.inventory['shields'].forEach(function (element, id) {
-                if (item === element) {
-                    cleanActiveItem();
-                    character.inventory['shields'].splice(id, 1)
-                }
-            });
-            character.inventory['grenades'].forEach(function (element, id){
-                if (item === element){
-                    cleanActiveItem();
-                    character.inventory['grenades'].splice(id, 1)
-                }
-            })
-            character.inventory['mods_class'].forEach(function (element, id){
-                if (item === element){
-                    cleanActiveItem();
-                    character.inventory['mods_class'].splice(id, 1)
-                }
-            })
-        })
-    }
-    displaySheet();
-    displayInventory();
-    displayPool();
-    displayHUD();
-    refreshBar('ammo')
-    $("#main-weapon").trigger('change')
-}
 
 //TODO : Achat
 //TODO: Ammo & tir & rechargement
